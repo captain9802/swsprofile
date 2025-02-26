@@ -42,13 +42,13 @@ export default {
 
 <style lang="scss">
 .introduction {
-  background-color: #fff;
-  border: 1px solid #ddd;
   justify-items: center;
   height: 100%;
   align-content: center;
   display: grid;
   gap: 5rem;
+  background-color: #f4f4f4;
+  border-radius: 10px;
 }
 
 .introduction-header {
@@ -62,7 +62,7 @@ export default {
 }
 
 .introduction-hi {
-  max-width: 700px;
+  max-width: 600px;
 }
 
 .image-container {

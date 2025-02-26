@@ -1,30 +1,54 @@
 <template>
   <div class="layout">
     <div class="left">
-     <MyIntroduction/>
+      <MyIntroduction />
     </div>
     <div class="tab">
-      <p>탭</p>
+      <MyTab :selectedTab="selectedTab" @tab-selected="changeProjectContent" />
     </div>
     <div class="project">
-      <p>프로젝트 소개</p>
+      <component :is="selectedComponent" />
     </div>
   </div>
 </template>
 
 <script>
 import MyIntroduction from "@/components/mypage/MyIntroduction.vue";
+import MyTab from "@/components/mypage/MyTab.vue";
+import IntroductionTab from "@/components/mypage/tab/IntroductionTab.vue";
+import ProjectTab from "@/components/mypage/tab/ProjectTab.vue";
+import CareerTab from "@/components/mypage/tab/CareerTab.vue";
 
 export default {
   name: "MyPage",
-  components: {MyIntroduction}
-}
+  components: { MyTab, MyIntroduction, IntroductionTab, ProjectTab, CareerTab },
+  data() {
+    return {
+      selectedTab: "introduction"
+    };
+  },
+  computed: {
+    selectedComponent() {
+      return this.selectedTab === "project"
+          ? ProjectTab
+          : this.selectedTab === "career"
+              ? CareerTab
+              : IntroductionTab;
+    }
+  },
+  methods: {
+    changeProjectContent(tabName) {
+      this.selectedTab = tabName;
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 body {
   margin: 0;
 }
+
 .layout {
   display: flex;
   width: 100%;
@@ -32,13 +56,13 @@ body {
 }
 
 .left {
-  width: 878px;
-  background-color: #f4f4f4;
+  width: 678px;
+  background-color: #eaeaea;
   padding: 20px;
 }
 
 .tab {
-  width: 80px;
+  width: 60px;
   background-color: #ddd;
 }
 
@@ -46,5 +70,12 @@ body {
   flex-grow: 1;
   background-color: #eaeaea;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  transition: background-color 0.3s ease;
 }
 </style>
