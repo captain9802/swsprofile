@@ -108,6 +108,7 @@ export default {
           { name: "Naver Cloud", img: "/stack/naver.png" },
           { name: "Nginx", img: "/stack/nginx.png" },
           { name: "Ubuntu", img: "/stack/ubuntu.png" },
+          { name: "MySql", img: "/stack/mysql.png" },
       ],
       collaboratorStacks: [
           { name: "GitHub", img: "/stack/github.png" },
