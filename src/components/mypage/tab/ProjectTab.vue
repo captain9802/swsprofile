@@ -1,7 +1,7 @@
 <template>
   <div class="slider-container">
-    <h2 class="title">앨범 슬라이드</h2>
-
+    <div class="title">{{ currentProject.name }}</div>
+    <div class="sub-title">{{ currentProject.description }}</div>
     <div class="slider">
       <div class="slides" :style="sliderStyle">
         <div
@@ -15,14 +15,16 @@
       </div>
     </div>
 
-    <div class="controls">
-      <button @click="prevSlide">«</button>
-      <button @click="openDetail(projects[1])" class="play-button">▶</button>
-      <button @click="nextSlide">»</button>
-    </div>
-
     <div class="progress-bar">
       <div class="progress" :style="progressStyle"></div>
+      <div class="progress-time">{{ timerText }}</div>
+    </div>
+    <div class="controls">
+      <button @click="prevSlide"><img src="/jongnol/prev.png" class="prev-button"></button>
+        <button @click="togglePlay">
+          <img  class="play-button" :src="isPlaying ? '/jongnol/pause.png' : '/jongnol/play.png'"  />
+        </button>
+      <button @click="nextSlide"><img src="/jongnol/next.png"  class="next-button" ></button>
     </div>
 
     <ProjectDetail v-if="isDetailOpen" :project="selectedProject" @close="isDetailOpen = false" />
@@ -48,7 +50,13 @@ export default {
     const isDetailOpen = ref(false);
     const selectedProject = ref(null);
     const timer = ref(0);
-    const progressStyle = ref({ width: '0%' });
+    const timerText = ref("0:00");
+    let timeoutId = null;
+    let intervalId = null;
+    const isPlaying = ref(false);
+    const currentProject = computed(() => projects.value[currentIndex.value]);
+    let progressPercentage = 0;
+    let timerCount = 0;
 
     const sliderStyle = computed(() => {
       return {
@@ -57,21 +65,37 @@ export default {
       };
     });
 
+    const progressStyle = ref({ width: "0%", transition: "none" });
+
     const startTimer = () => {
-      setInterval(() => {
-        if (timer.value < 10) {
-          timer.value++;
-          progressStyle.value = { width: `${(timer.value / 10) * 100}%` };
-        } else {
-          nextSlide();
+      if (intervalId) clearInterval(intervalId);
+
+      intervalId = setInterval(() => {
+        timer.value = timerCount;
+        timerText.value = `0:${timer.value.toString().padStart(2, "0")}`;
+        timerCount++;
+
+        progressPercentage = Math.min((timerCount / 10) * 100, 100);
+        progressStyle.value = {
+          width: `${progressPercentage}%`,
+          transition: "width 1s linear"
+        };
+
+        if (timerCount >= 11) {
+          clearInterval(intervalId);
+          setTimeout(() => {
+            nextSlide();
+          }, 500);
         }
       }, 1000);
     };
 
-    const resetTimer = () => {
-      timer.value = 0;
-      progressStyle.value = { width: '0%' };
-    };
+
+    onBeforeUnmount(() => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    });
+
 
     const getCardStyle = (index) => {
       if (index === currentIndex.value) {
@@ -83,13 +107,18 @@ export default {
     };
 
     const nextSlide = () => {
-      currentIndex.value = (currentIndex.value + 1) % (projects.value.length);
-      resetTimer();
+      currentIndex.value = (currentIndex.value + 1) % projects.value.length;
+      timerCount = 0;
+      progressStyle.value = { width: "0%", transition: "none" };
+      startTimer();
     };
 
     const prevSlide = () => {
       currentIndex.value = (currentIndex.value - 1 + projects.value.length) % projects.value.length;
-      resetTimer();
+      progressPercentage = 0;
+      timerCount = 0;
+      progressStyle.value = { width: "0%", transition: "none" };
+      startTimer();
     };
 
     const openDetail = (project) => {
@@ -99,8 +128,23 @@ export default {
 
     onMounted(() => {
       startTimer();
+      isPlaying.value = true;
     });
 
+    onBeforeUnmount(() => {
+      if (intervalId) clearInterval(intervalId);
+    });
+
+    const togglePlay = () => {
+      if (isPlaying.value) {
+        clearInterval(intervalId);
+        progressStyle.value = { width: `${progressPercentage}%`, transition: "none" };
+      } else {
+        startTimer();
+      }
+
+      isPlaying.value = !isPlaying.value;
+    };
 
     return {
       currentIndex,
@@ -113,6 +157,10 @@ export default {
       progressStyle,
       sliderStyle,
       getCardStyle,
+      currentProject,
+      timerText,
+      togglePlay,
+      isPlaying
     };
   },
 };
@@ -129,6 +177,12 @@ export default {
 .title {
   font-size: 1.8rem;
   font-weight: bold;
+}
+
+.sub-title {
+  font-size: 1.4rem;
+  font-weight: lighter;
+  margin: 1.25rem 0;
 }
 
 .slider {
@@ -167,30 +221,40 @@ export default {
 .controls {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 2.25rem;
 }
 
 button {
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 3.25rem;
   cursor: pointer;
 }
 
 .play-button {
-  font-size: 1.5rem;
+  width: 60px;
+  display: flex;
+}
+
+.prev-button,
+.next-button {
+  width: 45px;
+  display: flex;
 }
 
 .progress-bar {
-  margin-top: 20px;
-  height: 5px;
+  margin: 2.25rem 0;
+  height: 0.825rem;
   background-color: #ddd;
-  width: 100%;
+  width: 350px;
+  border-radius: 10px;
+  justify-self: center;
 }
 
 .progress {
   height: 100%;
-  background-color: #4caf50;
+  background-color: black;
+  border-radius: 10px;
+  transition: width 10s linear;
 }
 </style>
