@@ -53,17 +53,34 @@ body {
   display: flex;
   width: 100%;
   height: 100vh;
+
+  @media (max-width: 1200px) {
+    flex-direction: column; // 세로 정렬
+    height: auto; // 높이 자동 조절
+  }
 }
 
 .left {
   width: 678px;
   background-color: #eaeaea;
   padding: 20px;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+    padding: 0;
+  }
 }
 
 .tab {
   width: 60px;
   background-color: #ddd;
+
+  @media (max-width: 1200px) {
+    width: 100%; // 세로 정렬 시 전체 너비
+    height: 50px; // 높이를 지정하여 가로 배치 유지
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .project {
@@ -77,5 +94,10 @@ body {
   font-weight: bold;
   color: #333;
   transition: background-color 0.3s ease;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+    padding: 2rem 0;
+  }
 }
 </style>

@@ -42,6 +42,7 @@ export default {
 
 <style lang="scss">
 .introduction {
+  box-sizing: border-box;
   justify-items: center;
   height: 100%;
   align-content: center;
@@ -49,6 +50,12 @@ export default {
   gap: 5rem;
   background-color: #f4f4f4;
   border-radius: 10px;
+  padding: 1rem;
+
+  @media (max-width: 1200px) {
+    gap: 3rem;
+    padding: 0.5rem;
+  }
 }
 
 .introduction-header {
@@ -59,10 +66,23 @@ export default {
 .introduction-info {
   display: flex;
   gap: 7rem;
+
+  @media (max-width: 1200px) {
+    gap: 3rem;
+  }
+
+  @media (max-width: 375px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
 }
 
-.introduction-hi {
-  max-width: 600px;
+.introduction-myself {
+  @media (max-width: 1200px) {
+    display: none;
+  }
 }
 
 .image-container {
@@ -70,6 +90,16 @@ export default {
   height: 140px;
   overflow: hidden;
   border-radius: 50%;
+
+  @media (max-width: 1200px) {
+    width: 100px;
+    height: 100px;
+  }
+
+  @media (max-width: 375px) {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 .profile-image {
@@ -77,4 +107,11 @@ export default {
   height: 100%;
   object-fit: cover;
 }
+
+.introduction-content {
+  @media (max-width: 375px) {
+    font-size: 0.9rem;
+  }
+}
+
 </style>

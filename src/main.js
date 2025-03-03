@@ -1,6 +1,13 @@
-import './assets/main.css'
+import { createApp } from 'vue';
+import App from './App.vue';
+import 'vuetify/styles';
 
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createVuetify } from 'vuetify';
 
-createApp(App).mount('#app')
+const vuetify = createVuetify({
+    theme: { dark: false },
+});
+
+const app = createApp(App);
+app.use(vuetify);
+app.mount('#app');

@@ -9,6 +9,7 @@
             :key="index"
             class="project-card"
             :style="getCardStyle(index)"
+            @click="changeSlide(index)"
         >
           <img :src="project.image" :alt="project.name" class="project-image" />
         </div>
@@ -27,7 +28,9 @@
       <button @click="nextSlide"><img src="/jongnol/next.png"  class="next-button" ></button>
     </div>
 
-    <ProjectDetail v-if="isDetailOpen" :project="selectedProject" @close="isDetailOpen = false" />
+    <v-dialog v-model="isDetailOpen" max-width="500px">
+      <ProjectDetail/>
+    </v-dialog>
   </div>
 </template>
 
@@ -97,12 +100,22 @@ export default {
     });
 
 
+    const changeSlide = (index) => {
+      if (index === currentIndex.value) {
+        openDetail(projects.value[index]);
+      } else {
+        currentIndex.value = index;
+        timerCount = 0;
+        progressStyle.value = { width: "0%", transition: "none" };
+        startTimer();
+      }
+    };
+
     const getCardStyle = (index) => {
       if (index === currentIndex.value) {
-        return { opacity: 1, transform: 'scale(1)', transition: 'opacity 0.6s ease, transform 0.6s ease' };
-      }
-      else {
-        return { opacity: 0.5, transform: 'scale(0.8)', transition: 'opacity 0.6s ease, transform 0.6s ease' };
+        return { opacity: 1, transform: "scale(1)", transition: "opacity 0.6s ease, transform 0.6s ease" };
+      } else {
+        return { opacity: 0.5, transform: "scale(0.8)", transition: "opacity 0.6s ease, transform 0.6s ease" };
       }
     };
 
@@ -146,6 +159,7 @@ export default {
       isPlaying.value = !isPlaying.value;
     };
 
+
     return {
       currentIndex,
       isDetailOpen,
@@ -160,7 +174,8 @@ export default {
       currentProject,
       timerText,
       togglePlay,
-      isPlaying
+      isPlaying,
+      changeSlide,
     };
   },
 };

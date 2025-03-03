@@ -44,6 +44,9 @@ export default {
   justify-content: center;
   height: 100%;
   gap: 3rem;
+  @media (max-width: 1200px) {
+    display: flex;
+  }
 }
 
 .tab-content {

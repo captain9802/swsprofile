@@ -127,7 +127,7 @@ export default {
   background-color: #f0f0f0;
   border-radius: 10px;
   height: 100%;
-  max-width: 1070px;
+  max-width: 1100px;
   overflow: auto;
 }
 
@@ -140,6 +140,9 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
   gap: 2rem;
+  @media (max-width: 1200px) {
+    display: grid;
+  }
 }
 
 .introduce-section {
@@ -209,6 +212,11 @@ export default {
   font-size: 15px;
   height: 120px;
   overflow: hidden;
+
+  @media (max-width: 1200px) {
+    width: 100px;
+    padding: 0;
+  }
 }
 
 .stack-item img {
