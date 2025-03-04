@@ -28,9 +28,15 @@
       <button @click="nextSlide"><img src="/jongnol/next.png"  class="next-button" ></button>
     </div>
 
-    <v-dialog v-model="isDetailOpen" max-width="500px">
-      <ProjectDetail/>
+    <v-dialog
+        v-model="isDetailOpen"
+        attach="body"
+        class="custom-dialog"
+    >
+      <div>메롱</div>
+      <ProjectDetail v-if="selectedProject" :project="selectedProject" />
     </v-dialog>
+
   </div>
 </template>
 
@@ -42,11 +48,10 @@ export default {
   components: { ProjectDetail },
   setup() {
     const projects = ref([
-      { name: "앨범 A", description: "A 앨범 설명", image: "/jongnol/title.png" },
-      { name: "앨범 B", description: "B 앨범 설명", image: "/jongnol/project2.png" },
-      { name: "앨범 C", description: "C 앨범 설명", image: "/jongnol/project3.png" },
-      { name: "앨범 D", description: "D 앨범 설명", image: "/jongnol/project4.png" },
-      { name: "앨범 E", description: "E 앨범 설명", image: "/jongnol/project5.png" },
+      { name: "SWS", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/title.png", index: 0 },
+      { name: "JNL – JongNoL", description: "사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스.", image: "/jongnol/project2.png",  index: 1 },
+      { name: "NC4All-NextClassForAll", description: "누구나 강사가 되어 자신만의 강의를 올릴 수 있는 개발자들을 위한 온라인 강의 서비스.", image: "/jongnol/project3.png",  index: 2 },
+      { name: "secondSTORY", description: "자신의 중고 물품들을 경매를 통해 사람들에게 거래 할 수 있게 도와주는 \n 다양한 기능을 제공하는 웹 서비스", image: "/jongnol/project4.png",  index: 3 },
     ]);
 
     const currentIndex = ref(0);
@@ -103,9 +108,12 @@ export default {
     const changeSlide = (index) => {
       if (index === currentIndex.value) {
         openDetail(projects.value[index]);
+        console.log(projects.value[index]);
+        togglePlay();
       } else {
         currentIndex.value = index;
         timerCount = 0;
+        timerText.value = "0:00";
         progressStyle.value = { width: "0%", transition: "none" };
         startTimer();
       }
@@ -123,6 +131,7 @@ export default {
       currentIndex.value = (currentIndex.value + 1) % projects.value.length;
       timerCount = 0;
       progressStyle.value = { width: "0%", transition: "none" };
+      timerText.value = "0:00";
       startTimer();
     };
 
@@ -131,6 +140,7 @@ export default {
       progressPercentage = 0;
       timerCount = 0;
       progressStyle.value = { width: "0%", transition: "none" };
+      timerText.value = "0:00";
       startTimer();
     };
 
@@ -192,12 +202,14 @@ export default {
 .title {
   font-size: 1.8rem;
   font-weight: bold;
+  white-space: pre-line;
 }
 
 .sub-title {
   font-size: 1.4rem;
   font-weight: lighter;
   margin: 1.25rem 0;
+  white-space: pre-line;
 }
 
 .slider {
@@ -272,4 +284,13 @@ button {
   border-radius: 10px;
   transition: width 10s linear;
 }
+
+.custom-dialog {
+  z-index: 100 !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 1165px;
+}
+
 </style>

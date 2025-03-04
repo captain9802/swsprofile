@@ -127,12 +127,12 @@ export default {
   background-color: #f0f0f0;
   border-radius: 10px;
   height: 100%;
-  max-width: 1100px;
   overflow: auto;
 }
 
 .tab-content {
   padding: 1.5rem;
+  max-width: 1100px;
 }
 
 .profile-container {
@@ -198,6 +198,7 @@ export default {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
+  align-items: center;
 }
 
 .stack-item {
@@ -210,7 +211,7 @@ export default {
   background: #f0f0f0;
   text-align: center;
   font-size: 15px;
-  height: 120px;
+  height: 100%;
   overflow: hidden;
 
   @media (max-width: 1200px) {
