@@ -27,31 +27,36 @@
         </button>
       <button @click="nextSlide"><img src="/jongnol/next.png"  class="next-button" ></button>
     </div>
-
     <v-dialog
         v-model="isDetailOpen"
         attach="body"
         class="custom-dialog"
     >
-      <div>메롱</div>
+      <div class="mini-button"><div class="mini-button-control">
+        <img  @click="showPrevProject" src="/jongnol/prev.png" class="prev-button-mini">
+        <img  @click="showNextProject" src="/jongnol/next.png"  class="next-button-mini" >
+      </div><img @click="closeDialog" src="/jongnol/cancel.png" class="cancel-button-mini"></div>
       <ProjectDetail v-if="selectedProject" :project="selectedProject" />
     </v-dialog>
-
   </div>
 </template>
 
 <script>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount,watch  } from "vue";
 import ProjectDetail from "@/components/mypage/tab/project/ProjectDetail.vue";
+import { VDialog } from 'vuetify/components';
 
 export default {
-  components: { ProjectDetail },
+  components: { VDialog, ProjectDetail },
   setup() {
     const projects = ref([
       { name: "SWS", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/title.png", index: 0 },
-      { name: "JNL – JongNoL", description: "사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스.", image: "/jongnol/project2.png",  index: 1 },
-      { name: "NC4All-NextClassForAll", description: "누구나 강사가 되어 자신만의 강의를 올릴 수 있는 개발자들을 위한 온라인 강의 서비스.", image: "/jongnol/project3.png",  index: 2 },
-      { name: "secondSTORY", description: "자신의 중고 물품들을 경매를 통해 사람들에게 거래 할 수 있게 도와주는 \n 다양한 기능을 제공하는 웹 서비스", image: "/jongnol/project4.png",  index: 3 },
+      { name: "JNL – JongNoL", description: "사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스.",
+        image: "/jongnol/project2.png",main: "/jongnol/main3.png",  index: 1 },
+      { name: "NC4All-NextClassForAll", description: "누구나 강사가 되어 자신만의 강의를 올릴 수 있는 개발자들을 위한 온라인 강의 서비스.",
+        image: "/jongnol/project3.png",  index: 2 },
+      { name: "secondSTORY", description: "자신의 중고 물품들을 경매를 통해 사람들에게 거래 할 수 있게 도와주는 \n 다양한 기능을 제공하는 웹 서비스",
+        image: "/jongnol/project4.png",main: "/jongnol/main3.png",  index: 3 },
     ]);
 
     const currentIndex = ref(0);
@@ -108,16 +113,44 @@ export default {
     const changeSlide = (index) => {
       if (index === currentIndex.value) {
         openDetail(projects.value[index]);
-        console.log(projects.value[index]);
         togglePlay();
-      } else {
+      } else
         currentIndex.value = index;
         timerCount = 0;
         timerText.value = "0:00";
         progressStyle.value = { width: "0%", transition: "none" };
+        if (isPlaying.value === false && isDetailOpen.value === false) {
+          isPlaying.value = true;
+        }
         startTimer();
-      }
     };
+
+    const selectedIndex = computed(() => {
+      return projects.value.findIndex(p => p.index === selectedProject.value?.index);
+    });
+
+    const showNextProject = () => {
+      const nextIndex = (selectedIndex.value + 1) % projects.value.length;
+      openDetail(projects.value[nextIndex]);
+      nextSlide();
+    };
+
+    const showPrevProject = () => {
+      const prevIndex =
+          (selectedIndex.value - 1 + projects.value.length) % projects.value.length;
+      openDetail(projects.value[prevIndex]);
+      prevSlide();
+    };
+
+    const closeDialog = () => {
+      isDetailOpen.value = false;
+    };
+
+    watch(isDetailOpen, (newValue) => {
+      if (!newValue) {
+        togglePlay();
+      }
+    });
 
     const getCardStyle = (index) => {
       if (index === currentIndex.value) {
@@ -129,6 +162,10 @@ export default {
 
     const nextSlide = () => {
       currentIndex.value = (currentIndex.value + 1) % projects.value.length;
+      if (isPlaying.value === false) {
+        return;
+      } else
+      progressPercentage = 0;
       timerCount = 0;
       progressStyle.value = { width: "0%", transition: "none" };
       timerText.value = "0:00";
@@ -137,6 +174,9 @@ export default {
 
     const prevSlide = () => {
       currentIndex.value = (currentIndex.value - 1 + projects.value.length) % projects.value.length;
+      if (isPlaying.value === false) {
+        return;
+      } else
       progressPercentage = 0;
       timerCount = 0;
       progressStyle.value = { width: "0%", transition: "none" };
@@ -186,6 +226,9 @@ export default {
       togglePlay,
       isPlaying,
       changeSlide,
+      closeDialog,
+      showPrevProject,
+      showNextProject,
     };
   },
 };
@@ -287,10 +330,28 @@ button {
 
 .custom-dialog {
   z-index: 100 !important;
-  position: absolute !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 1165px;
+  max-width: 1165px;
+  width: 100%;
+}
+
+.prev-button-mini,
+.next-button-mini,
+.cancel-button-mini {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.mini-button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mini-button-control {
+  display: flex;
+  gap: 1rem;
 }
 
 </style>
