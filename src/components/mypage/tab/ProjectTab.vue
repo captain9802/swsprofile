@@ -50,11 +50,11 @@ export default {
   components: { VDialog, ProjectDetail },
   setup() {
     const projects = ref([
-      { name: "SWS", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/title.png", index: 0 },
+      { name: "SWS-Portfolio", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/project5.png",main: "/jongnol/4.png", index: 0 },
       { name: "JNL – JongNoL", description: "사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스.",
-        image: "/jongnol/project2.png",main: "/jongnol/main3.png",  index: 1 },
+        image: "/jongnol/project2.png",main: "/jongnol/3.png",  index: 1 },
       { name: "NC4All-NextClassForAll", description: "누구나 강사가 되어 자신만의 강의를 올릴 수 있는 개발자들을 위한 온라인 강의 서비스.",
-        image: "/jongnol/project3.png",  index: 2 },
+        image: "/jongnol/project3.png",main: "/jongnol/2.png",  index: 2 },
       { name: "secondSTORY", description: "자신의 중고 물품들을 경매를 통해 사람들에게 거래 할 수 있게 도와주는 \n 다양한 기능을 제공하는 웹 서비스",
         image: "/jongnol/project4.png",main: "/jongnol/main3.png",  index: 3 },
     ]);
@@ -113,8 +113,11 @@ export default {
     const changeSlide = (index) => {
       if (index === currentIndex.value) {
         openDetail(projects.value[index]);
+        if (isPlaying.value === false) {
+          return;
+        }
         togglePlay();
-      } else
+      } else {
         currentIndex.value = index;
         timerCount = 0;
         timerText.value = "0:00";
@@ -123,6 +126,7 @@ export default {
           isPlaying.value = true;
         }
         startTimer();
+      }
     };
 
     const selectedIndex = computed(() => {
@@ -199,16 +203,20 @@ export default {
     });
 
     const togglePlay = () => {
+      if (isDetailOpen.value === true && isPlaying.value === true) {
+        clearInterval(intervalId);
+        progressStyle.value = { width: `${progressPercentage}%`, transition: "none" };
+        isPlaying.value = !isPlaying.value;
+        return;
+      }
       if (isPlaying.value) {
         clearInterval(intervalId);
         progressStyle.value = { width: `${progressPercentage}%`, transition: "none" };
       } else {
         startTimer();
       }
-
       isPlaying.value = !isPlaying.value;
     };
-
 
     return {
       currentIndex,
@@ -246,6 +254,9 @@ export default {
   font-size: 1.8rem;
   font-weight: bold;
   white-space: pre-line;
+  @media (max-width: 700px) {
+    font-size: 1.25rem;
+  }
 }
 
 .sub-title {
@@ -253,6 +264,9 @@ export default {
   font-weight: lighter;
   margin: 1.25rem 0;
   white-space: pre-line;
+  @media (max-width: 700px) {
+    font-size: 1rem;
+  }
 }
 
 .slider {
@@ -286,6 +300,10 @@ export default {
   border-radius: 10px;
   object-fit: cover;
   transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+  @media (max-width: 700px) {
+    max-width: 350px;
+    max-height: 350px;
+  }
 }
 
 .controls {
@@ -304,12 +322,18 @@ button {
 .play-button {
   width: 60px;
   display: flex;
+  @media (max-width: 700px) {
+    width: 50px;
+  }
 }
 
 .prev-button,
 .next-button {
   width: 45px;
   display: flex;
+  @media (max-width: 700px) {
+    width: 35px;
+  }
 }
 
 .progress-bar {
@@ -319,6 +343,10 @@ button {
   width: 350px;
   border-radius: 10px;
   justify-self: center;
+
+  @media (max-width: 700px) {
+    max-width: 250px;
+  }
 }
 
 .progress {

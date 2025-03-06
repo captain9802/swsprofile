@@ -76,8 +76,8 @@ body {
   background-color: #ddd;
 
   @media (max-width: 1200px) {
-    width: 100%; // 세로 정렬 시 전체 너비
-    height: 50px; // 높이를 지정하여 가로 배치 유지
+    width: 100%;
+    height: 50px;
     display: flex;
     justify-content: center;
   }
