@@ -124,7 +124,7 @@ export default {
 <style lang="scss" scoped>
 .tab-content-myprofile {
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: #F3EBE6;
   border-radius: 10px;
   height: 100%;
   overflow: auto;
@@ -166,7 +166,7 @@ export default {
   content: "";
   flex: 1;
   height: 1px;
-  background-color: #444;
+  background-color: black;
 }
 
 .text-with-line::before {
@@ -177,16 +177,20 @@ export default {
   font-size: 18px;
   font-weight: bold;
   margin: 0 1rem;
-  }
+  color: #12100E;
+}
 
 .introduce {
   font-size: 16px;
   line-height: 1.7;
   font-weight: 600;
+  color: #12100E;
+
 }
 .tags {
   font-size: 15px;
   line-height: 1.6;
+
 }
 
 .stack-container {
@@ -208,7 +212,6 @@ export default {
   justify-content: space-between;
   width: 90px;
   padding: 10px;
-  background: #f0f0f0;
   text-align: center;
   font-size: 15px;
   height: 100%;
@@ -243,7 +246,7 @@ export default {
 }
 
 .tab-content-myprofile::-webkit-scrollbar-thumb {
-  background: red;
+  background: #CEC4CD;
   border-radius: 10px;
   transition: background 0.3s ease;
 }

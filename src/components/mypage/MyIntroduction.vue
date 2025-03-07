@@ -48,7 +48,7 @@ export default {
   align-content: center;
   display: grid;
   gap: 5rem;
-  background-color: #f4f4f4;
+  background-color: #F3EBE6;
   border-radius: 10px;
   padding: 1rem;
 
@@ -66,6 +66,7 @@ export default {
 .introduction-info {
   display: flex;
   gap: 7rem;
+  color: #12100E;
 
   @media (max-width: 1200px) {
     gap: 3rem;
@@ -80,6 +81,8 @@ export default {
 }
 
 .introduction-myself {
+  font-weight: 500;
+  color: #12100E;
   @media (max-width: 1200px) {
     display: none;
   }
@@ -109,6 +112,7 @@ export default {
 }
 
 .introduction-content {
+  font-weight: 600;
   @media (max-width: 375px) {
     font-size: 0.9rem;
   }

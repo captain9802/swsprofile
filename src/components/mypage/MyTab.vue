@@ -39,6 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 .tab-container {
+  background-color: #A28974 ;
   display: grid;
   align-content: center;
   justify-content: center;
@@ -56,11 +57,11 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 30%;
-  background-color: #f0f0f0;
+  background-color: #F3EBE6;
   transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: #ddd;
+    background-color: #2B7365;
     transform: scale(1.1);
   }
 }
@@ -73,7 +74,7 @@ export default {
 .tab-content.active {
   background-color: #f0f0f0;
   transform: scale(1.15);
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 10px #f0f0f0;
 }
 
 </style>

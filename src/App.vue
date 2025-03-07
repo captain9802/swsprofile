@@ -3,7 +3,7 @@ import Home from "@/main/Home.vue";
 </script>
 
 <template>
-  <div id="app">
+  <div id="app" style="font-family: 'Noto Sans', sans-serif">
     <Home />
   </div>
 </template>

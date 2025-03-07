@@ -62,8 +62,8 @@ body {
 
 .left {
   width: 678px;
-  background-color: #eaeaea;
   padding: 20px;
+  background-color: #A28974;
 
   @media (max-width: 1200px) {
     width: 100%;
@@ -73,7 +73,7 @@ body {
 
 .tab {
   width: 60px;
-  background-color: #ddd;
+  background-color: #A28974;
 
   @media (max-width: 1200px) {
     width: 100%;
@@ -85,16 +85,15 @@ body {
 
 .project {
   flex-grow: 1;
-  background-color: #eaeaea;
+  background-color: #A28974 ;
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
   transition: background-color 0.3s ease;
-
+  color: #141111;
   @media (max-width: 1200px) {
     width: 100%;
     padding: 2rem 0;
