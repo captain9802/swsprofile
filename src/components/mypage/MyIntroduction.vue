@@ -75,7 +75,7 @@ export default {
     gap: 3rem;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 400px) {
     flex-direction: column;
     align-items: center;
     text-align: center;
