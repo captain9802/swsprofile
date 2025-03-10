@@ -5,36 +5,37 @@
         <div class="image-container">
           <img src="/sws.jpg" alt="프로필 이미지" class="profile-image"/>
         </div>
-        <p>손우성</p>
+        <p style="font-weight: 600">손우성</p>
       </div>
       <div class="introduction-content">
         <p>
-          🔗 GitHub: captain9802<br><br>
-          👤 이름: 손우성<br><br>
-          📅 생년월일: 1998.02.24<br><br>
-          📍 위치: 경기도 군포시<br><br>
-          📞 연락처: 010-9493-9521<br><br>
-          📧 이메일: captain9802@gmail.com
+          <a href="https://github.com/captain9802" target="_blank" class="github-link">
+            <i class="fi fi-br-link-alt" style="padding-right: 3px"></i> GitHub: captain9802<br><br>
+          </a>
+          <i class="fi fi-ss-user"  style="padding-right: 3px"></i> 이름: 손우성<br><br>
+          <i class="fi fi-br-calendar-check"  style="padding-right: 3px"></i> 생년월일: 1998.02.24<br><br>
+          <i class="fi fi-ss-home"  style="padding-right: 3px"></i> 위치: 경기도 군포시<br><br>
+          <i class="fi fi-br-envelope"  style="padding-right: 3px"></i> 이메일: captain9802@gmail.com
         </p>
       </div>
     </div>
     <div class="introduction-myself">
       <p class="introduction-hi">
-        안녕하세요! 👋
-        도전과 해결을 즐기는 개발자 손우성입니다.<br><br>
-        React와 Vue를 활용하여 더 나은 웹 경험을 만드는 것을 목표로 하고 있으며, 디자인 툴인 Figma를 통해 사용자 친화적인 UI를 구현하는 데 집중하고 있습니다.<br><br>
+        안녕하세요! 기술에 대한 도전과 다양한 기능을 구현하는 것을 즐기는 손우성입니다. <br>
 
-        새로운 기술을 배우는 것을 즐기며, 문제를 해결하는 과정에서 성장하는 것이 개발의 가장 큰 매력이라고 생각합니다.
-        더 좋은 서비스를 만들기 위해 끊임없이 고민하고 도전합니다.<br><br>
-        궁금한 점이 있거나, 함께 이야기 나누고 싶다면 언제든 연락 주세요!
-        📧 captain9802@gmail.com
-        감사합니다! 😊
+        풀스택 개발에 관심을 두고 React, Vue.js, SpringBoot, Java17 등을 중심으로 다양한 프로젝트를 진행해왔습니다.<br> JavaScript, HTML/CSS3를 활용해 웹 경험을 개선하고, 사용자 친화적인 인터페이스를 만드는 데 노력하고 있습니다.
+
+        또한, NaverCloud, AWS, S3 등의 클라우드 환경과 배포에 대한 경험도 있어, 개발과 배포 과정에서 원활한 협업이 가능합니다.<br>
+
+        도전적인 마음으로 지속적으로 공부하며, 더 나은 서비스를 만들기 위해 노력하고 있습니다.<br><br> 함께 이야기 나누고 싶다면 언제든지 연락 주세요! captain9802@gmail.com😊
       </p>
     </div>
   </div>
 </template>
 
+
 <script>
+
 export default {
   name: "MyIntroduction"
 }
@@ -54,19 +55,21 @@ export default {
 
   @media (max-width: 1200px) {
     gap: 3rem;
-    padding: 0.5rem;
+    padding: 20px;
   }
 }
 
 .introduction-header {
   justify-items: center;
   align-content: center;
+  display: grid;
+  gap: 10px;
 }
 
 .introduction-info {
   display: flex;
   gap: 7rem;
-  color: #12100E;
+  color: #3E3E3E;
 
   @media (max-width: 1200px) {
     gap: 3rem;
@@ -81,8 +84,8 @@ export default {
 }
 
 .introduction-myself {
-  font-weight: 500;
-  color: #12100E;
+  font-weight: 600;
+  color: #3E3E3E;
   @media (max-width: 1200px) {
     display: none;
   }
@@ -116,6 +119,15 @@ export default {
   @media (max-width: 375px) {
     font-size: 0.9rem;
   }
+}
+
+.github-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.github-link:hover {
+  text-decoration: underline;
 }
 
 </style>

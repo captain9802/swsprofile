@@ -1,43 +1,48 @@
 <template>
-  <div class="slider-container">
-    <div class="title">{{ currentProject.name }}</div>
-    <div class="sub-title">{{ currentProject.description }}</div>
-    <div class="slider">
-      <div class="slides" :style="sliderStyle">
-        <div
-            v-for="(project, index) in projects"
-            :key="index"
-            class="project-card"
-            :style="getCardStyle(index)"
-            @click="changeSlide(index)"
-        >
-          <img :src="project.image" :alt="project.name" class="project-image" />
+  <div class="projects">
+    <div class="projects-content">
+      <div class="slider-container">
+        <div class="title">{{ currentProject.name }}</div>
+        <div class="sub-title">{{ currentProject.description }}</div>
+        <div class="slider">
+          <div class="slides" :style="sliderStyle">
+            <div
+                v-for="(project, index) in projects"
+                :key="index"
+                class="project-card"
+                :style="getCardStyle(index)"
+                @click="changeSlide(index)"
+            >
+              <img :src="project.image" :alt="project.name" class="project-image" />
+            </div>
+          </div>
         </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress" :style="progressStyle"></div>
+            <div class="progress-time">{{ timerText }}</div>
+          </div>
+        </div>
+        <div class="controls">
+          <button @click="prevSlide"><img src="/jongnol/prev1.png" class="prev-button"></button>
+            <button @click="togglePlay">
+              <img class="play-button" :class="{'hovered': isPlaying === false, 'hovers': isPlaying === true }" :src="isPlaying ? '/jongnol/pause1.png' : '/jongnol/play1.png'"  />
+            </button>
+          <button @click="nextSlide"><img src="/jongnol/next1.png"  class="next-button" ></button>
+        </div>
+        <v-dialog
+            v-model="isDetailOpen"
+            attach="body"
+            class="custom-dialog"
+        >
+          <div class="mini-button"><div class="mini-button-control">
+            <img  @click="showPrevProject" src="/jongnol/miniprev.png" class="prev-button-mini">
+            <img  @click="showNextProject" src="/jongnol/mininext.png"  class="next-button-mini" >
+          </div><img @click="closeDialog" src="/jongnol/cancel.png" class="cancel-button-mini"></div>
+          <ProjectDetail v-if="selectedProject" :project="selectedProject" />
+        </v-dialog>
       </div>
     </div>
-
-    <div class="progress-bar">
-      <div class="progress" :style="progressStyle"></div>
-      <div class="progress-time">{{ timerText }}</div>
-    </div>
-    <div class="controls">
-      <button @click="prevSlide"><img src="/jongnol/prev.png" class="prev-button"></button>
-        <button @click="togglePlay">
-          <img  class="play-button" :src="isPlaying ? '/jongnol/pause.png' : '/jongnol/play.png'"  />
-        </button>
-      <button @click="nextSlide"><img src="/jongnol/next.png"  class="next-button" ></button>
-    </div>
-    <v-dialog
-        v-model="isDetailOpen"
-        attach="body"
-        class="custom-dialog"
-    >
-      <div class="mini-button"><div class="mini-button-control">
-        <img  @click="showPrevProject" src="/jongnol/prev.png" class="prev-button-mini">
-        <img  @click="showNextProject" src="/jongnol/next.png"  class="next-button-mini" >
-      </div><img @click="closeDialog" src="/jongnol/cancel.png" class="cancel-button-mini"></div>
-      <ProjectDetail v-if="selectedProject" :project="selectedProject" />
-    </v-dialog>
   </div>
 </template>
 
@@ -50,12 +55,12 @@ export default {
   components: { VDialog, ProjectDetail },
   setup() {
     const projects = ref([
-      { name: "SWS-Portfolio", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/project5.png",main: "/jongnol/4.png", index: 0 },
+      { name: "SWS-Portfolio", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/project1.png",main: "/jongnol/1.png", index: 0 },
       { name: "JNL – JongNoL", description: "사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스.",
         image: "/jongnol/project2.png",main: "/jongnol/3.png",  index: 1 },
       { name: "NC4All-NextClassForAll", description: "누구나 강사가 되어 자신만의 강의를 올릴 수 있는 개발자들을 위한 온라인 강의 서비스.",
         image: "/jongnol/project3.png",main: "/jongnol/2.png",  index: 2 },
-      { name: "secondSTORY", description: "자신의 중고 물품들을 경매를 통해 사람들에게 거래 할 수 있게 도와주는 \n 다양한 기능을 제공하는 웹 서비스",
+      { name: "secondSTORY", description: "자신의 중고 물품들을 경매를 통해 사람들에게 거래 할 수 있게 도와주는 다양한 기능을 제공하는 웹 서비스.",
         image: "/jongnol/project4.png",main: "/jongnol/main3.png",  index: 3 },
     ]);
 
@@ -243,10 +248,24 @@ export default {
 </script>
 
 <style scoped>
+.projects {
+  width: 100%;
+  background-color: #F3EBE6;
+  border-radius: 10px;
+  height: 100%;
+  overflow: auto;
+  align-content: center;
+}
+
+.projects-content {
+  padding: 20px;
+}
+
 .slider-container {
   text-align: center;
   position: relative;
   max-width: 1050px;
+  justify-items: center;
   margin: auto;
 }
 
@@ -254,6 +273,7 @@ export default {
   font-size: 1.8rem;
   font-weight: bold;
   white-space: pre-line;
+  color: #8B5E3B;
   @media (max-width: 700px) {
     font-size: 1.25rem;
   }
@@ -261,11 +281,16 @@ export default {
 
 .sub-title {
   font-size: 1.4rem;
-  font-weight: lighter;
+  font-weight: 500;
   margin: 1.25rem 0;
   white-space: pre-line;
+  color: #4A3C3A;
+  @media (max-width: 1200px) {
+    font-weight: bold;
+  }
   @media (max-width: 700px) {
     font-size: 1rem;
+    font-weight: bold;
   }
 }
 
@@ -306,6 +331,10 @@ export default {
   }
 }
 
+.progress-time {
+  color: #4A3C3A;
+}
+
 .controls {
   display: flex;
   justify-content: center;
@@ -317,6 +346,7 @@ button {
   border: none;
   font-size: 3.25rem;
   cursor: pointer;
+  color: #3E3E3E;
 }
 
 .play-button {
@@ -325,6 +355,34 @@ button {
   @media (max-width: 700px) {
     width: 50px;
   }
+}
+
+.play-button.hovered:hover {
+  content: url('/jongnol/play.png');
+}
+
+.play-button.hovers:hover {
+  content: url('/jongnol/pause.png');
+}
+
+.next-button:hover {
+  content: url('/jongnol/next.png');
+}
+
+.prev-button:hover {
+  content: url('/jongnol/prev.png');
+}
+
+.next-button-mini:hover {
+  content: url('/jongnol/next.png');
+}
+
+.prev-button-mini:hover {
+  content: url('/jongnol/prev.png');
+}
+
+.cancel-button-mini:hover {
+  content: url('/jongnol/cancel1.png');
 }
 
 .prev-button,
@@ -336,14 +394,17 @@ button {
   }
 }
 
+.progress-container {
+  display: flex;
+  justify-content: center;
+}
+
 .progress-bar {
   margin: 2.25rem 0;
   height: 0.825rem;
   background-color: #ddd;
   width: 350px;
   border-radius: 10px;
-  justify-self: center;
-
   @media (max-width: 700px) {
     max-width: 250px;
   }
@@ -351,7 +412,7 @@ button {
 
 .progress {
   height: 100%;
-  background-color: black;
+  background-color: #C48A3A;
   border-radius: 10px;
   transition: width 10s linear;
 }

@@ -1,16 +1,30 @@
 <template>
   <v-card class="v-card" :key="project.index">
-    <v-img class="v-img" :src="project.main" cover alt="Project Image"></v-img>
+    <v-img class="v-img" :src="project.main" contain alt="Project Image"></v-img>
+
     <v-card-title class="v-card-title">
       <span class="project-name">{{ project.name }}</span>
       <span class="v-date">({{ projectInfo.date }})</span>
       <div class="project-tech">주 기술 : {{ projectInfo.tech }}</div>
     </v-card-title>
+    <div> <a v-if="project.index === 0"
+             href="https://www.sws-portfoilo.com"
+             target="_blank"
+             class="project-url">
+      www.sws-portfoilo.com
+    </a>
+
+      <a v-else-if="project.index === 1"
+         href="https://www.jongnol.site"
+         target="_blank"
+         class="project-url">
+        www.jongnol.site
+      </a></div>
     <div v-if="!hasHiddenImages">
       <span class="project-img" @click="toggleImageSlider">프로젝트 상세 이미지 보기 {{ isSliderOpen ? '▲' : '▼' }}</span>
       <div v-if="imageSliderOpen" class="image-slider-container">
         <button class="prev-button" @click="prevSlide" :disabled="index === 0">
-          <img class="img-prev" :src="index === 0 ? '/cprev.png' : '/prev.png'" alt="이전 버튼">
+          <img class="img-prev" :src="index === 0 ? '/cprev.png' : '/prev1.png'" alt="이전 버튼">
         </button>
         <div class="image-slider">
           <div class="image-slide" v-for="(img, i) in visibleImages" :key="i">
@@ -23,7 +37,7 @@
           </div>
         </div>
         <button class="next-button" @click="nextSlide" :disabled="index + visibleCount >= images[project.index].length">
-          <img class="img-next" :src="index + visibleCount >= images[project.index].length ? '/cnext.png' : '/next.png'" alt="다음 버튼">
+          <img class="img-next" :src="index + visibleCount >= images[project.index].length ? '/cnext.png' : '/next1.png'" alt="다음 버튼">
         </button>
       </div>
     </div>
@@ -59,22 +73,28 @@ export default {
       isSliderOpen: false,
       index: 0,
       images: [
-        // 각 프로젝트에 맞는 이미지 배열
         [
-          "/second/second0.jpg",
-          "/second/second1.png",
-          "/second/second2.png",
-          "/second/second3.png",
-          "/second/second4.png",
-          "/second/second6.png",
+          "/sws/sws_0.png",
+          "/sws/sws_1.png",
+          "/sws/sws_2.png",
+          "/sws/sws_3.png",
+          "/sws/sws_4.png",
+          "/sws/sws_5.png",
         ],
         [
-          "/jongnol/4.png",
-          "/second/second1.png",
-          "/second/second2.png",
-          "/second/second3.png",
-          "/second/second4.png",
-          "/second/second6.png",
+          "/jongnol/project/Main.png",
+          "/jongnol/project/메인 모바일.png",
+          "/jongnol/project/홈 화면.png",
+          "/jongnol/project/검색.png",
+          "/jongnol/project/검색 모바일.png",
+          "/jongnol/project/퀴즈 풀기전.png",
+          "/jongnol/project/퀴즈 풀기.png",
+          "/jongnol/project/퀴즈 등록 dialog.png",
+          "/jongnol/project/문제 작성.png",
+          "/jongnol/project/마이페이지 회원정보.png",
+          "/jongnol/project/마이페이지 내 퀴즈.png",
+          "/jongnol/project/로그인.png",
+          "/jongnol/project/회원가입.png",
         ],
         [
           "/nc4/nc40.png",
@@ -111,16 +131,64 @@ export default {
     projectInfo() {
       const projects = {
         0: {
-          date: "아직 모름",
-          description: "이 프로젝트는 Vue.js와 Vuetify를 활용한 UI 개발 프로젝트입니다.",
-          features: "📌 반응형 UI, 📊 데이터 시각화, 🔧 실시간 업데이트",
-          tech: "Vue.js, Vuetify",
+          date: "25. 02 ~ 25. 03 / 1人",
+          description: "'SWS-Portfolio'는 손우성이라는 개발자를 소개하기 위해 만든 프로젝트입니다.",
+          features: "구현한 페이지 및 기능:\n\n" +
+              "● 메인 페이지 레이아웃 구성\n\n" +
+              "- MyIntroduction 컴포넌트: 좌측에 배치하여 개인 소개 정보를 표시.\n" +
+              "- MyTab 컴포넌트: 탭을 생성하고, 클릭 시 동적으로 내용을 변경하는 기능 구현.\n" +
+              "- 동적 탭 전환: selectedTab을 이용해 탭 선택 시 관련된 컴포넌트를 동적으로 전환.\n\n" +
+              "● 탭 전환 및 내용 동적 변경\n\n" +
+              "- 탭 클릭 시 selectedTab이 변경되어, selectedComponent를 통해 관련 컴포넌트가 표시됨.\n" +
+              "- @tab-selected 이벤트로 탭을 선택하고, changeProjectContent 메소드로 동적으로 콘텐츠를 출력.\n\n" +
+              "● 커리어 탭 (CareerTab)\n\n" +
+              "- 구직 상태와 프로젝트 경험을 표시.\n" +
+              "- 각 프로젝트의 사용 언어, 개발 환경, 역할 등을 구체적으로 나열.\n\n" +
+              "● 프로젝트 탭 (ProjectTab)\n\n" +
+              "- 사용자가 참여한 프로젝트 목록을 동적으로 표시.\n" +
+              "- 프로젝트 제목, 개발 기간, 기술 스택, 설명 등을 구체적으로 나열하고, 상세 보기 기능을 구현.\n\n" +
+              "● 소개 탭 (IntroductionTab)\n\n" +
+              "- 개발자 자기소개 및 기술 스택을 표시.\n\n" +
+              "● 프로젝트 상세 페이지 (Project Detail)\n\n" +
+              "- 각 프로젝트의 제목, 기간, 기술 스택, 설명 등을 포함한 상세 정보 제공.\n",
+          tech: "Vue, NginX, AWS, JavaScript, HTML/CSS3, Ubuntu",
         },
         1: {
-          date: "아직 모름",
-          description: "Vuetify를 활용한 프론트엔드 디자인 시스템 프로젝트입니다.",
-          features: "🎨 커스텀 디자인, 📦 컴포넌트 재사용, 🚀 최적화된 성능",
-          tech: "Vue.js, Vuetify",
+          date: "24. 11 ~ 25. 01 / 1人",
+          description: "'JongNol’은 사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스입니다",
+          features:
+              "구현했던 페이지 및 기능 :\n\n" +
+              "● 메인 페이지 구성\n\n" +
+              "- 슬라이드 쇼 구현 - Framer Motion을 사용하여 3초마다 자동으로 전환되는 슬라이드 쇼를 구현.\n" +
+              "- 애니메이션 구현 - 페이지 요소에 페이드 인 애니메이션을 적용하여 시각적 효과를 주었습니다.\n" +
+              "- 반응형 디자인 - MUI 컴포넌트와 SCSS를 활용해 화면 크기에 따라 유동적으로 변화하는 레이아웃을 구현.\n\n" +
+              "● 검색 페이지 구성\n\n" +
+              "- 퀴즈 검색 기능 구현 - 사용자가 검색어를 입력하면 해당 검색어로 퀴즈 목록을 필터링하여 결과를 표시.\n" +
+              "- 퀴즈 상세 보기 모달 - 퀴즈 카드 클릭 시 퀴즈의 상세 정보가 모달 형태로 나타나며, 퀴즈 시작을 위한 인터페이스 제공.\n\n" +
+              "● 퀴즈 상세보기 및 미리보기\n\n" +
+              "- 퀴즈 제목 및 설명 표시 - 퀴즈의 제목과 설명을 다이얼로그 상에 표시하여, 사용자가 퀴즈의 상세 정보를 쉽게 확인할 수 있도록 구현.\n" +
+              "- 문제 수 선택 - 사용자가 퀴즈에서 풀 문제 수를 선택할 수 있도록 드롭다운 메뉴로 제공.\n\n" +
+              "● 퀴즈 풀기 페이지\n\n" +
+              "- 답안 저장 및 순차적 진행 - 사용자가 문제를 풀 때마다 답안을 로컬 스토리지에 저장하고, 새로고침 후에도 답안이 유지.\n" +
+              "- 객관식 문제의 랜덤 순서 - 객관식 문제의 정답과 오답을 랜덤으로 섞어 사용자에게 보여주는 기능 구현.\n\n" +
+              "● 퀴즈 등록\n\n" +
+              "- 퀴즈 생성 다이얼로그 구성 - 퀴즈 제목, 설명, 썸네일 이미지를 삽입하고 데이터를 localStorage에 저장.\n" +
+              "- 썸네일 이미지 업로드 - 사용자가 이미지를 업로드하면 FileReader를 이용해 Base64로 변환하여 저장.\n" +
+              "- 문제 유형 선택 - 객관식과 주관식 문제 유형을 선택할 수 있도록 Tabs를 활용한 UI 구성.\n" +
+              "- 데이터 저장 및 유효성 검사 - 사용자가 입력한 문제 데이터를 localStorage에 저장하고, 필수 입력값에 대한 유효성 검사.\n\n" +
+              "● 마이페이지\n\n" +
+              "- 회원정보 변경 - 프로필 이미지와 이름을 수정할 수 있으며, 변경 후 업데이트 버튼을 통해 정보를 저장.\n" +
+              "- 회원탈퇴 - 회원탈퇴 버튼을 통해 유저 정보를 삭제.\n" +
+              "- 유저 정보 기반 퀴즈 목록 조회 - 로그인한 사용자가 만든 퀴즈 목록을 서버에서 가져와 표시.\n" +
+              "- 애니메이션 효과 - 퀴즈 카드가 부드럽게 나타나고, 마우스를 올리면 카드가 확대되는 효과 적용.\n\n" +
+              "● 로그인\n\n" +
+              "- 로그인 기능 - JWT 토큰으로 사용자 인증을 통해 로그인 후 홈페이지로 이동.\n" +
+              "- 로그인 폼 - 아이디와 비밀번호 입력 필드를 구성하고, 폼 상태를 관리.\n\n" +
+              "● 회원가입\n\n" +
+              "- 회원가입 기능 - 아이디, 닉네임, 비밀번호를 입력받고 유효성 검사를 통해 회원가입 진행.\n" +
+              "- 중복 확인 - 아이디와 닉네임 중복 여부를 서버에서 확인하고, 유효한 값만 사용하도록 설정.\n" +
+              "- 비밀번호 유효성 검사 - 비밀번호의 유효성을 체크하고, 비밀번호 확인이 일치하는지 검증.",
+          tech: "Java17, SpringBoot, React, Node.js, NginX, AWS, S3, MySQL, JavaScript, HTML/CSS3, Ubuntu",
         },
         2: {
           date: "24. 02 ~ 24. 04 / 3人",
@@ -224,6 +292,7 @@ export default {
   transform: translateY(20px);
   animation: fadeInUp 0.8s ease-out forwards;
 
+
   @for $i from 1 through 10 {
     &:nth-child(#{$i}) {
       animation-delay: #{$i * 0.2}s;
@@ -234,6 +303,7 @@ export default {
 .v-img,
 .v-card-title,
 .project-tech,
+.project-url,
 .project-img,
 .v-card-subtitle,
 .v-card-description,
@@ -251,6 +321,9 @@ export default {
 }
 .project-tech {
   animation-delay: 0.6s;
+}
+.project-url {
+  animation-delay: 0.8s;
 }
 .project-img {
   animation-delay: 1s;
@@ -280,16 +353,23 @@ export default {
 }
 
 .v-img {
+  position: sticky;
   border-radius: 12px;
 }
 
 .project-tech {
   font-size: 1rem;
   text-align: left;
+  color: #3E3E3E;
 
   @media (max-width: 700px) {
     font-size: 0.825rem;
   }
+}
+
+.project-url {
+  font-size: 1rem;
+  color: #3E3E3E;
 }
 
 .project-img {
@@ -298,6 +378,7 @@ export default {
   cursor: pointer;
   justify-self: left;
   font-weight: 600;
+  color: #3E3E3E;
 
   @media (max-width: 700px) {
     font-size: 0.85rem;
@@ -313,6 +394,7 @@ export default {
   white-space: pre-line;
   align-items: baseline;
   gap: 0.5rem;
+  color: #3E3E3E;
 
   @media (max-width: 700px) {
     font-size: 1.25rem;
@@ -321,6 +403,10 @@ export default {
 
 .v-date {
   font-size: 0.6em;
+
+  @media (max-width: 450px) {
+    display: block;
+  }
 }
 
 .v-card-subtitle {
@@ -336,7 +422,7 @@ export default {
   padding: 0;
   white-space: pre-line;
   font-size: 16px;
-  color: black;
+  color: #3E3E3E;
   font-weight: bold;
 
   @media (max-width: 700px) {
@@ -385,6 +471,14 @@ export default {
   cursor: pointer;
 }
 
+.img-prev:hover {
+  content: url('/prev.png');
+}
+
+.img-next:hover {
+  content: url('/next.png');
+}
+
 .prev-button:disabled,
 .next-button:disabled {
   cursor: not-allowed;
@@ -425,7 +519,7 @@ export default {
 }
 
 .v-card::-webkit-scrollbar-thumb {
-  background: red;
+  background: #CEC4CD;
   border-radius: 10px;
   transition: background 0.3s ease;
 }

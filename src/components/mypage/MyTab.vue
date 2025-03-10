@@ -5,21 +5,21 @@
           :class="{ active: selectedTab === 'introduction' }"
           @click="selectTab('introduction')"
       >
-        <img src="/my_profile.png" alt="프로필 탭" class="tab-content-img" />
+        <img :src="introductionImage" alt="프로필 탭" class="tab-content-img" />
       </div>
       <div
           class="tab-content"
           :class="{ active: selectedTab === 'project' }"
           @click="selectTab('project')"
       >
-        <img src="/my_project.png" alt="프로젝트 탭" class="tab-content-img" />
+        <img :src="projectImage" alt="프로젝트 탭" class="tab-content-img" />
       </div>
       <div
           class="tab-content"
           :class="{ active: selectedTab === 'career' }"
           @click="selectTab('career')"
       >
-        <img src="/my_carrer.png" alt="경력 탭" class="tab-content-img" />
+        <img :src="careerImage" alt="경력 탭" class="tab-content-img" />
       </div>
   </div>
 </template>
@@ -33,7 +33,18 @@ export default {
     selectTab(tabName) {
       this.$emit("tab-selected", tabName);
     }
-  }
+  },
+  computed: {
+    introductionImage() {
+      return this.selectedTab === "introduction" ? "/my_profile1.png" : "/my_profile.png";
+    },
+    projectImage() {
+      return this.selectedTab === "project" ? "/my_project1.png" : "/my_project.png";
+    },
+    careerImage() {
+      return this.selectedTab === "career" ? "/my_carrer1.png" : "/my_carrer.png";
+    }
+  },
 };
 </script>
 
@@ -61,8 +72,14 @@ export default {
   transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: #2B7365;
-    transform: scale(1.1);
+    animation: shakeAndScale 0.5s ease-in-out infinite;
+  }
+  @keyframes shakeAndScale {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(3deg); }
+    50% { transform: scale(1.1) rotate(-3deg); }
+    75% { transform: scale(1.1) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); }
   }
 }
 

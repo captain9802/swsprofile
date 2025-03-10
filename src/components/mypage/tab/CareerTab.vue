@@ -14,11 +14,21 @@
           </div>
           <p>📌 <strong>개발언어:</strong> <span class="badge">Front : Thymeleaf, React, Javascript, Html, Css | Back : Spring, SpringBoot, Node.js | Server : NaverCloud, Mysql, Ubuntu </span></p>
           <ul>
-            <li>Foundry 사업부 반도체 B2B 시스템 2.0 고도화</li>
-            <li>개발언어: Salesforce LWC (shadow DOM 기반 Frontend 개발언어) / APEX(JAVA 기반 자체 Backend 개발언어)</li>
-            <li>Lightning Web component(es6 web component)를 통한 Frontend 개발</li>
-            <li>LWC Redux 적용 및 Apex(서버통신) 공통처리 개발</li>
-            <li>APEX(JAVA)와 SOQL(DB)을 통한 BackEnd 개발</li>
+            <li>Secondstory</li>
+            <li>사용 언어: Java, JavaScript, HTML/CSS3</li>
+            <li>개발 환경: Java17, Gradle, SpringBoot, JQuery, Thymeleaf</li>
+            <li>서버 / 배포 환경: NaverCloud, MySQL, ObjectStorage</li>
+            <li>주요 역할: 메인 페이지 구현</li>
+            <li>주요 배운 점: 비동기 요청(AJAX) 활용, 쿠키를 이용한 사용자 경험 개선, 협업툴 활용</li>
+          </ul>
+
+          <ul>
+            <li>Nc4All</li>
+            <li>사용 언어: Java, HTML, CSS, JavaScript</li>
+            <li>개발 환경: Java17, SpringBoot, Node.js, React</li>
+            <li>서버 / 배포 환경: NaverCloud, MySQL, ObjectStorage</li>
+            <li>주요 역할: 메인 페이지, 관리자 페이지 개발</li>
+            <li>주요 배운 점: React와 JPA/QueryDsl 활용, 반응형 디자인 구현, 관리자 시스템 개발</li>
           </ul>
         </div>
       </div>
@@ -34,7 +44,7 @@ export default {
 
 <style scoped>
 .career-tab {
-  background-color: #f0f0f0;
+  background-color: #F3EBE6;
   border-radius: 10px;
   overflow: auto;
   width: 100%;
@@ -60,6 +70,7 @@ export default {
 h3 {
   font-size: 1.8rem;
   margin-bottom: 20px;
+  color: #D17A22;
 }
 
 .career-list {
@@ -80,22 +91,25 @@ h3 {
 h4 {
   font-size: 1.5rem;
   margin: 5px 0;
+  color: #3E3E3E;
 }
 
 p {
   font-size: 1rem;
   margin: 5px 0;
+  color: #4A3C3A;
 }
 
 .project {
   padding: 15px;
   border-radius: 10px;
-  background-color: orange;
+  background-color: #EDE0D4;
 }
 
 .project-item-title {
   font-size: 1.3rem;
   margin: 1.25rem 0;
+  color: #4A3C3A;
 }
 
 .badge {
@@ -104,6 +118,7 @@ p {
   padding: 3px 7px;
   border-radius: 5px;
   font-size: 0.9rem;
+  color: #3E3E3E;
 }
 
 ul {
@@ -114,6 +129,7 @@ ul {
 li {
   font-size: 1rem;
   line-height: 1.5;
+  color: #3E3E3E;
 }
 
 .career-tab::-webkit-scrollbar {

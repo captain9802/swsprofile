@@ -55,8 +55,8 @@ body {
   height: 100vh;
 
   @media (max-width: 1200px) {
-    flex-direction: column; // 세로 정렬
-    height: auto; // 높이 자동 조절
+    flex-direction: column;
+    height: auto;
   }
 }
 
@@ -67,7 +67,7 @@ body {
 
   @media (max-width: 1200px) {
     width: 100%;
-    padding: 0;
+    padding: 20px;
   }
 }
 
@@ -96,7 +96,6 @@ body {
   color: #141111;
   @media (max-width: 1200px) {
     width: 100%;
-    padding: 2rem 0;
   }
 }
 </style>

@@ -7,17 +7,12 @@
             <div class="text-with-line-text">INTRODUCE</div>
           </div>
           <div class="introduce">
-            안녕하세요. 저는 개발자 손우성입니다.<br />
-            현재 FrontEnd 직군에서 프로젝트를 진행하고 있습니다.<br />
-            Vue와 React를 활용한 개발을 좋아하며, 새로운 기술에 대한 도전을 즐깁니다.<br />
-            프론트엔드뿐만 아니라 Springboot를 활용한 BackEnd 경험도 보유하고 있으며,<br />
-            배포의 경험도 보유하고 있습니다.<br />
-            또한 디자인과 개발의 접점에서 사용자 경험을 고려한 인터페이스 구현을 중요하게 생각합니다.<br />
-            <br />
-            기술 트렌드에 관심이 많아, 새로운 기술을 빠르게 습득하고 적용하는 것을 즐깁니다.<br />
-            더 좋은 서비스와 효율적인 개발 방법을 고민하며,<br />
-            매일 성장하는 개발자가 되기 위해 노력하고 있습니다.<br />
-            잘 부탁드립니다! 😊<br />
+            안녕하세요, 개발자 손우성입니다.
+            저는 FrontEnd 분야에서 다양한 프로젝트를 진행하고 있으며,<br> 주로 Vue와 React를 사용하고 있습니다.<br>
+            프론트엔드 외에도 SpringBoot를 활용한 백엔드 경험과 AWS, NaverCloud를 이용한 배포 작업 경험이 있습니다.<br>
+            새로운 기술에 도전하며 그 과정에서 배우는 것을 즐기고,<br> 사용자 경험을 중심으로 한 디자인과 개발에 많은 관심을 두고 있습니다.<br>
+            또한, 다양한 기술을 습득하고 이를 제 프로젝트에 적용하는 것을 좋아하며,<br> 매일 새로운 오류를 해결하며 성장하는 개발자가 되기 위해 끊임없이 노력하고 있습니다.<br>
+            앞으로도 계속해서 배우고, 성장해 나가겠습니다. 감사합니다! 😊
           </div>
         </div>
         <div class="tags-section">
@@ -166,7 +161,7 @@ export default {
   content: "";
   flex: 1;
   height: 1px;
-  background-color: black;
+  background-color: #8B5E3B;
 }
 
 .text-with-line::before {
@@ -177,20 +172,20 @@ export default {
   font-size: 18px;
   font-weight: bold;
   margin: 0 1rem;
-  color: #12100E;
+  color: #8B5E3B;
 }
 
 .introduce {
   font-size: 16px;
   line-height: 1.7;
   font-weight: 600;
-  color: #12100E;
+  color: #3E3E3E;
 
 }
 .tags {
   font-size: 15px;
   line-height: 1.6;
-
+  color: #3E3E3E;
 }
 
 .stack-container {
@@ -216,11 +211,15 @@ export default {
   font-size: 15px;
   height: 100%;
   overflow: hidden;
+  color: #3E3E3E;
 
   @media (max-width: 1200px) {
-    width: 100px;
     padding: 0;
   }
+  @media (max-width: 1200px) {
+    width: 89px;
+  }
+
 }
 
 .stack-item img {
