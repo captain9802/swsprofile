@@ -8,14 +8,14 @@
       <div class="project-tech">주 기술 : {{ projectInfo.tech }}</div>
     </v-card-title>
     <div> <a v-if="project.index === 0"
-             href="https://www.sws-portfoilo.com"
+             href="https://sws-portfolio.com/"
              target="_blank"
              class="project-url">
       www.sws-portfoilo.com
     </a>
 
       <a v-else-if="project.index === 1"
-         href="https://www.jongnol.site"
+         href="https://jongnol.site"
          target="_blank"
          class="project-url">
         www.jongnol.site
