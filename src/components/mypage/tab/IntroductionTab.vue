@@ -38,7 +38,7 @@
       </div>
       <div class="stack-container">
         <div class="text-with-line">
-          <div class="text-with-line-text">BacktEnd Stack</div>
+          <div class="text-with-line-text">BackEnd Stack</div>
         </div>
         <div class="stack-list">
           <div class="stack-item" v-for="stack in backendStacks" :key="stack.name">
