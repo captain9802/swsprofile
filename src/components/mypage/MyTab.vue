@@ -21,6 +21,13 @@
       >
         <img :src="careerImage" alt="경력 탭" class="tab-content-img" />
       </div>
+    <div
+        class="tab-content"
+        :class="{ active: selectedTab === 'blog' }"
+        @click="selectTab('blog')"
+    >
+      <img :src="blogImage" alt="blog" class="tab-content-img" />
+    </div>
   </div>
 </template>
 
@@ -42,7 +49,10 @@ export default {
       return this.selectedTab === "project" ? "/my_project1.png" : "/my_project.png";
     },
     careerImage() {
-      return this.selectedTab === "career" ? "/my_carrer1.png" : "/my_carrer.png";
+      return this.selectedTab === "career" ? "/career1.png" : "/career.png";
+    },
+    blogImage() {
+      return this.selectedTab === "blog" ? "/my_carrer1.png" : "/my_carrer.png";
     }
   },
 };

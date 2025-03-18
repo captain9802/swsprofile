@@ -18,10 +18,11 @@ import MyTab from "@/components/mypage/MyTab.vue";
 import IntroductionTab from "@/components/mypage/tab/IntroductionTab.vue";
 import ProjectTab from "@/components/mypage/tab/ProjectTab.vue";
 import CareerTab from "@/components/mypage/tab/CareerTab.vue";
+import BlogTab from "@/components/mypage/tab/BlogTab.vue";
 
 export default {
   name: "MyPage",
-  components: { MyTab, MyIntroduction, IntroductionTab, ProjectTab, CareerTab },
+  components: { MyTab, MyIntroduction, IntroductionTab, ProjectTab, CareerTab, Blog: BlogTab },
   data() {
     return {
       selectedTab: "introduction"
@@ -33,7 +34,9 @@ export default {
           ? ProjectTab
           : this.selectedTab === "career"
               ? CareerTab
-              : IntroductionTab;
+              : this.selectedTab === "blog"
+                  ? BlogTab
+                  : IntroductionTab;
     }
   },
   methods: {
