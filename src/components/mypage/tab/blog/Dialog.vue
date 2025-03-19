@@ -21,7 +21,16 @@
           <label for="content">내용</label>
           <textarea id="content" v-model="newBlog.content" placeholder="내용을 입력하세요" required></textarea>
         </div>
-
+        <div class="tag-selecte">
+          <button
+              v-for="(tag, index) in availableTags"
+              :key="index"
+              :class="{'selected': newBlog.tags.includes(tag)}"
+              @click.prevent="toggleTag(tag)"
+              :disabled="newBlog.tags.length >= 3 && !newBlog.tags.includes(tag)">
+            #{{ tag }}
+          </button>
+        </div>
         <div class="button-group">
           <button type="submit" class="submit-btn">제출</button>
           <button type="button" @click="closeDialog" class="cancel-btn">취소</button>
@@ -52,8 +61,15 @@ export default {
     return {
       newBlog: {
         title: "",
-        content: ""
-      }
+        content: "",
+        tags: []
+      },
+      availableTags: [
+        'HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Node', 'Laravel',
+        'jQuery', 'Thymeleaf', 'Zustand', 'Redux', 'Framer-Motion',
+        'Styled Component', 'React Chart', 'Java', 'Spring Boot', 'Gradle',
+        'AWS', 'Naver Cloud', 'Nginx', 'Ubuntu', 'MySQL', '일본어', '정보처리기사', '코딩테스트'
+      ],
     };
   },
   methods: {
@@ -63,10 +79,18 @@ export default {
         this.newBlog.image = file;
       }
     },
+    toggleTag(tag) {
+      if (this.newBlog.tags.includes(tag)) {
+        this.newBlog.tags = this.newBlog.tags.filter(t => t !== tag);
+      } else if (this.newBlog.tags.length < 3) {
+        this.newBlog.tags.push(tag);
+      }
+    },
     submitBlog() {
       const blogData = {
         title: this.newBlog.title,
-        content: this.newBlog.content
+        content: this.newBlog.content,
+        tags: this.newBlog.tags,
       };
 
       axios.post('http://127.0.0.1:8000/blog/add', blogData)
@@ -185,5 +209,36 @@ textarea {
 
 .cancel-btn:hover {
   background-color: #aaa;
+}
+
+.tag-selecte {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-selecte button {
+  padding: 5px 10px;
+  background-color: #EDE0D4;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.825rem;
+  transition: background-color 0.3s;
+}
+
+.tag-selecte button:hover {
+  background-color: #A28974;
+}
+
+.tag-selecte button.selected {
+  background-color: #8B5E3B;
+  color: white;
+}
+
+.tag-selecte button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
 }
 </style>

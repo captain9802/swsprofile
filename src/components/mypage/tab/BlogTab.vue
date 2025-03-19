@@ -3,8 +3,8 @@
     <div class="blog-tab-content">
       <div class="blog-tab-header">
         <div class="blog-tab-write">
-        <div class="blog-tab-title">개발 Blog</div>
-        <button class="write-button" @click="openDialog">작성하기</button>
+          <div class="blog-tab-title">개발 Blog</div>
+          <button class="write-button" @click="openDialog" v-if="isOwner">작성하기</button>
         </div>
         <div class="blog-search">
           <span class="search-icon">
@@ -24,15 +24,15 @@
         <button
             v-for="(tag, index) in availableTags"
             :key="index"
-            :class="{'selected': selectedTags.includes(tag)}"
+            :class="{ 'selected': selectedTags.includes(tag) }"
             @click="toggleTag(tag)"
-            :disabled="selectedTags.length >= 3 && !selectedTags.includes(tag)">
+            :disabled="selectedTags.length >= 3 && !selectedTags.includes(tag)"
+        >
           #{{ tag }}
         </button>
       </div>
-      <!-- 블로그 목록 -->
       <div class="blog-list">
-        <div class="blog-item" v-for="(blog, index) in filteredBlogs" :key="index">
+        <div class="blog-item" v-for="(blog, index) in blogs" :key="index">
           <img :src="blog.image" alt="이미지 오류" class="blog-image" />
           <div class="blog-info">
             <h2 class="blog-title" v-bind:title="blog.title">{{ blog.title }}</h2>
@@ -41,6 +41,11 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="pagination">
+        <button @click="prevPage" :disabled="currentPage === 1" class="pagep-button"><img src="/pagep.png" alt="좌 버튼" class="prev-button"/></button>
+        <span class="page-number">{{ currentPage }} of {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="currentPage === totalPages" class="pagen-button"><img src="/pagen.png" alt="우 버튼" class="next-button"/></button>
       </div>
     </div>
     <v-dialog v-model="isDialogVisible" class="blog_create">
@@ -52,61 +57,61 @@
 <script>
 import Dialog from './blog/Dialog.vue';
 import { VDialog } from 'vuetify/components';
-import ProjectDetail from "@/components/mypage/tab/project/ProjectDetail.vue";
+import axios from 'axios';
 
 export default {
   name: "BlogTab",
   components: {
-    ProjectDetail,
-    Dialog,VDialog
+    Dialog,
+    VDialog
   },
   data() {
     return {
+      isOwner: false,
+      currentPage: 1,
+      itemsPerPage: 12,
+      totalPages: 0,
       searchQuery: "",
-      availableTags: ['HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Node', 'Laravel'],
-      selectedTags: [],
-      blogPosts: [
-        {
-          image: "/bitcamp.png",
-          title: "테스트 ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-          tags: ["React", "JavaScript", "Web Development"]
-        },
-        {
-          image: "/example2.jpg",
-          title: "테스트 2",
-          tags: ["PHP", "Laravel", "Backend"]
-        },
-        {
-          image: "/example3.jpg",
-          title: "테스트 3",
-          tags: ["SpringBoot", "Java", "API"]
-        },
-        {
-          image: "/example4.jpg",
-          title: "테스트 4",
-          tags: ["정보처리기사", "IT", "자격증"]
-        },
-        {
-          image: "/example5.jpg",
-          title: "테스트 5",
-          tags: ["Vue", "Frontend", "UI/UX"]
-        }
+      availableTags: [
+        'HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Node', 'Laravel',
+        'jQuery', 'Thymeleaf', 'Zustand', 'Redux', 'Framer-Motion',
+        'Styled Component', 'React Chart', 'Java', 'Spring Boot', 'Gradle',
+        'AWS', 'Naver Cloud', 'Nginx', 'Ubuntu', 'MySQL', '일본어', '정보처리기사', '코딩테스트'
       ],
+      selectedTags: [],
+      blogs: [],
       isDialogVisible: false,
     };
   },
-  computed: {
-    filteredBlogs() {
-      if (this.selectedTags.length === 0) {
-        return this.blogPosts;
-      }
-
-      return this.blogPosts.filter(blog => {
-        return this.selectedTags.some(tag => blog.tags.includes(tag));
-      });
-    }
+  mounted() {
+    this.fetchBlogs();
   },
   methods: {
+    async fetchBlogs() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/blog', {
+          params: {
+            page: this.currentPage,
+            limit: this.itemsPerPage,
+            search: this.searchQuery.trim(),
+            tags: this.selectedTags.join(',')
+          }
+        });
+
+        this.blogs = response.data.blogs.map(blog => ({
+          ...blog,
+          tags: blog.tags ? this.cleanTags(JSON.parse(blog.tags)) : []
+        }));
+        this.totalPages = Math.ceil(response.data.totalCount / this.itemsPerPage);
+      } catch (error) {
+        console.error('게시글을 불러오는 데 실패했습니다:', error);
+      }
+    },
+    cleanTags(tagsArray) {
+      return tagsArray
+          .map(tag => tag.replace(/[\n#"]/g, "").trim())
+          .filter(tag => tag.length > 0);
+    },
     toggleTag(tag) {
       const index = this.selectedTags.indexOf(tag);
       if (index > -1) {
@@ -114,19 +119,29 @@ export default {
       } else {
         this.selectedTags.push(tag);
       }
+      this.fetchBlogs();
     },
     handleSearch() {
-      if (this.searchQuery.trim()) {
-        console.log("검색 실행:", this.searchQuery);
-      } else {
-        console.log("검색어를 입력하세요.");
-      }
+      this.currentPage = 1;
+      this.fetchBlogs();
     },
     closeDialog() {
       this.isDialogVisible = false;
     },
     openDialog() {
       this.isDialogVisible = true;
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.fetchBlogs();
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.fetchBlogs();
+      }
     }
   }
 };
@@ -139,11 +154,13 @@ export default {
   overflow: auto;
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .blog-tab-content {
   padding: 20px;
   max-width: 1127px;
+  overflow: auto;
 }
 
 .blog-tab-header {
@@ -226,6 +243,7 @@ export default {
   border-radius: 10px;
   padding: 5px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 44px;
 }
 
 .search-icon {
@@ -245,7 +263,6 @@ export default {
   font-size: 1rem;
   width: 300px;
   font-weight: 500;
-  height: 44px;
 }
 
 .search-button {
@@ -400,6 +417,53 @@ export default {
   z-index: 100 !important;
   max-width: 1165px;
   width: 100%;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 1rem;
+}
+
+.prev-button,
+.next-button{
+  width: 20px;
+  height: 20px;
+}
+
+.page-number {
+  color: #4A3C3A;
+}
+
+.prev-button:disabled {
+  cursor: not-allowed;
+}
+
+.prev-button:hover {
+  content: url('/pagep1.png');
+}
+
+.next-button:hover {
+  content: url('/pagen1.png');
+}
+
+.pagen-button,
+.pagep-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.pagep-button:disabled {
+  cursor: not-allowed;
+}
+.pagen-button:disabled {
+  cursor: not-allowed;
 }
 
 </style>
