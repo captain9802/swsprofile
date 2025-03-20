@@ -4,7 +4,7 @@
       <div class="blog-tab-header">
         <div class="blog-tab-write">
           <div class="blog-tab-title">개발 Blog</div>
-          <button class="write-button" @click="openDialog" v-if="isOwner">작성하기</button>
+          <button class="write-button" @click="openDialog">작성하기</button>
         </div>
         <div class="blog-search">
           <span class="search-icon">
@@ -32,7 +32,7 @@
         </button>
       </div>
       <div class="blog-list">
-        <div class="blog-item" v-for="(blog, index) in blogs" :key="index">
+        <div class="blog-item" v-for="(blog, index) in blogs" :key="index" @click="selectBlog(blog)">
           <img :src="blog.image" alt="이미지 오류" class="blog-image" />
           <div class="blog-info">
             <h2 class="blog-title" v-bind:title="blog.title">{{ blog.title }}</h2>
@@ -51,6 +51,9 @@
     <v-dialog v-model="isDialogVisible" class="blog_create">
       <Dialog :isVisible="isDialogVisible" @close-dialog="closeDialog" />
     </v-dialog>
+    <v-dialog v-model="reviewDialogVisible" class="blog_create">
+      <BlogReview v-if="selectedBlog"  :blog="selectedBlog"  @close-dialog="closeReviewDialog" />
+    </v-dialog>
   </div>
 </template>
 
@@ -58,10 +61,12 @@
 import Dialog from './blog/Dialog.vue';
 import { VDialog } from 'vuetify/components';
 import axios from 'axios';
+import BlogReview from "@/components/mypage/tab/blog/BlogReview.vue";
 
 export default {
   name: "BlogTab",
   components: {
+    BlogReview,
     Dialog,
     VDialog
   },
@@ -81,6 +86,8 @@ export default {
       selectedTags: [],
       blogs: [],
       isDialogVisible: false,
+      reviewDialogVisible: false,
+      selectedBlog: null,
     };
   },
   mounted() {
@@ -127,6 +134,14 @@ export default {
     },
     closeDialog() {
       this.isDialogVisible = false;
+    },
+    closeReviewDialog() {
+      this.reviewDialogVisible = false;
+      this.selectedBlog = null;
+    },
+    selectBlog(blog) {
+      this.selectedBlog = blog;
+      this.reviewDialogVisible = true;
     },
     openDialog() {
       this.isDialogVisible = true;
@@ -297,6 +312,7 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  cursor: pointer;
 }
 
 .blog-image {
