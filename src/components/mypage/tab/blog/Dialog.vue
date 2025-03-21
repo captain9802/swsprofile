@@ -3,7 +3,7 @@
     <div class="dialog-container">
       <v-card-title class="v-card-title">
         <v-img src="path_to_your_image.jpg" max-width="40" class="v-img"></v-img>
-        <span class="headline">글 작성</span>
+        <span class="headline">{{ blog ? '블로그 수정' : '글 작성' }}</span>
       </v-card-title>
 
       <form @submit.prevent="submitBlog" class="dialog-form">
@@ -21,6 +21,7 @@
           <label for="content">내용</label>
           <textarea id="content" v-model="newBlog.content" placeholder="내용을 입력하세요" required></textarea>
         </div>
+
         <div class="tag-selecte">
           <button
               v-for="(tag, index) in availableTags"
@@ -31,8 +32,9 @@
             #{{ tag }}
           </button>
         </div>
+
         <div class="button-group">
-          <button type="submit" class="submit-btn">제출</button>
+          <button type="submit" class="submit-btn">{{ blog ? '수정' : '제출' }}</button>
           <button type="button" @click="closeDialog" class="cancel-btn">취소</button>
         </div>
       </form>
@@ -49,6 +51,10 @@ export default {
     isVisible: {
       type: Boolean,
       required: true
+    },
+    blog: {
+      type: Object,
+      default: null
     }
   },
   components: {
@@ -60,9 +66,10 @@ export default {
   data() {
     return {
       newBlog: {
-        title: "",
-        content: "",
-        tags: []
+        title: this.blog ? this.blog.title : '',
+        content: this.blog ? this.blog.content : '',
+        tags: this.blog ? this.blog.tags : [],
+        image: this.blog ? this.blog.image : null
       },
       availableTags: [
         'HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Node', 'Laravel',
@@ -91,16 +98,28 @@ export default {
         title: this.newBlog.title,
         content: this.newBlog.content,
         tags: this.newBlog.tags,
+        image: this.newBlog.image
       };
 
-      axios.post('http://127.0.0.1:8000/blog/add', blogData)
-          .then(response => {
-            console.log('블로그 글 작성 성공:', response.data);
-            this.$emit('close-dialog');
-          })
-          .catch(error => {
-            console.error('블로그 글 작성 실패:', error);
-          });
+      if (this.blog) {
+        axios.put(`http://127.0.0.1:8000/blog/update/${this.blog.id}`, blogData)
+            .then(response => {
+              console.log('블로그 글 수정 성공:', response.data);
+              this.$emit('close-dialog');
+            })
+            .catch(error => {
+              console.error('블로그 글 수정 실패:', error);
+            });
+      } else {
+        axios.post('http://127.0.0.1:8000/blog/add', blogData)
+            .then(response => {
+              console.log('블로그 글 작성 성공:', response.data);
+              this.$emit('close-dialog');
+            })
+            .catch(error => {
+              console.error('블로그 글 작성 실패:', error);
+            });
+      }
     },
     closeDialog() {
       this.$emit('close-dialog');
@@ -108,6 +127,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .v-card {
