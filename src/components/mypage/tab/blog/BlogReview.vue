@@ -3,20 +3,12 @@
   <v-card class="v-card">
     <div class="dialog-container">
       <v-card-title class="v-card-title">
-        <!-- 블로그 이미지 표시 -->
-        <v-img :src="blog.image" max-width="40" class="v-img"></v-img>
         <span class="headline">{{ blog.title }}</span>
       </v-card-title>
 
       <div class="blog-content">
         <div class="content-group">
-          <label>대표 이미지</label>
-          <v-img :src="blog.image" max-width="100" class="v-img"></v-img>
-        </div>
-
-        <div class="content-group">
-          <label>내용</label>
-          <p class="blog-contents">{{ blog.content }}</p>
+          <p class="blog-contents" v-html="sanitizedContent"></p>
         </div>
 
         <div class="content-group">
@@ -44,6 +36,7 @@
 import Dialog from "@/components/mypage/tab/blog/Dialog.vue";
 import { VCard, VCardTitle, VImg, VDialog } from 'vuetify/components';
 import axios from "axios";
+import DOMPurify from 'dompurify';
 
 export default {
   props: {
@@ -63,6 +56,23 @@ export default {
     return {
       putDialogVisible: false,
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const images = this.$el.querySelectorAll('.blog-contents img');
+      images.forEach(img => {
+        img.style.maxWidth = '100%';
+        img.style.hegiht = 'auto';
+        img.style.height = 'auto';
+        img.style.display = 'block';
+        img.style.margin = '0 auto';
+      });
+    });
+  },
+  computed: {
+    sanitizedContent() {
+      return DOMPurify.sanitize(this.blog.content, {ALLOWED_TAGS: ['img', 'p', 'b', 'i', 'strong', 'em']});
+    }
   },
   methods: {
     async deleteBlogs() {
@@ -102,14 +112,11 @@ export default {
   padding: 0;
 }
 
-.v-img {
-  margin-right: 1rem;
-}
-
 .dialog-container {
   display: grid;
   gap: 1rem;
   padding: 1rem;
+  flex-grow: 1;
 }
 
 .headline {
@@ -121,12 +128,13 @@ export default {
 .blog-content {
   display: grid;
   gap: 1rem;
+  flex-grow: 1;
 }
 
 .blog-contents {
   min-height: 300px;
-  overflow: auto;
-  max-height: 500px;
+  overflow-y: auto;
+  max-height: calc(100vh - 300px);
 }
 
 .content-group {
@@ -190,11 +198,5 @@ export default {
 
 .cancel-btn:hover {
   background-color: #aaa;
-}
-
-.blog_create {
-  z-index: 100 !important;
-  max-width: 1165px;
-  width: 100%;
 }
 </style>

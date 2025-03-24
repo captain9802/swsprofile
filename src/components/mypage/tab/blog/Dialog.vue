@@ -19,7 +19,7 @@
 
         <div class="input-group">
           <label for="content">내용</label>
-          <textarea id="content" v-model="newBlog.content" placeholder="내용을 입력하세요" required></textarea>
+          <div ref="editor"></div>
         </div>
 
         <div class="tag-selecte">
@@ -44,9 +44,18 @@
 
 <script>
 import axios from 'axios';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 import { VCard, VCardTitle, VCardSubtitle, VImg } from 'vuetify/components';
+import DOMPurify from 'dompurify';
 
 export default {
+  components: {
+    VCard,
+    VCardTitle,
+    VCardSubtitle,
+    VImg,
+  },
   props: {
     isVisible: {
       type: Boolean,
@@ -57,19 +66,13 @@ export default {
       default: null
     }
   },
-  components: {
-    VCard,
-    VCardTitle,
-    VCardSubtitle,
-    VImg,
-  },
   data() {
     return {
       newBlog: {
         title: this.blog ? this.blog.title : '',
         content: this.blog ? this.blog.content : '',
         tags: this.blog ? this.blog.tags : [],
-        image: this.blog ? this.blog.image : null
+        image: null
       },
       availableTags: [
         'HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Node', 'Laravel',
@@ -77,14 +80,30 @@ export default {
         'Styled Component', 'React Chart', 'Java', 'Spring Boot', 'Gradle',
         'AWS', 'Naver Cloud', 'Nginx', 'Ubuntu', 'MySQL', '일본어', '정보처리기사', '코딩테스트'
       ],
+      quillInstance: null
     };
+  },
+  mounted() {
+    this.quillInstance = new Quill(this.$refs.editor, {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          ['image', 'link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['code', 'code-block']
+        ]
+      }
+    });
+
+    if (this.newBlog.content) {
+      this.quillInstance.root.innerHTML = this.newBlog.content;
+    }
   },
   methods: {
     handleImageUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.newBlog.image = file;
-      }
+      this.newBlog.image = event.target.files[0];
     },
     toggleTag(tag) {
       if (this.newBlog.tags.includes(tag)) {
@@ -93,32 +112,33 @@ export default {
         this.newBlog.tags.push(tag);
       }
     },
-    submitBlog() {
-      const blogData = {
-        title: this.newBlog.title,
-        content: this.newBlog.content,
-        tags: this.newBlog.tags,
-        image: this.newBlog.image
-      };
+    async submitBlog() {
+      const sanitizedContent = DOMPurify.sanitize(this.quillInstance.root.innerHTML);
+      const formData = new FormData();
+      formData.append('title', this.newBlog.title);
+      formData.append('content', sanitizedContent);
+      formData.append('tags', JSON.stringify(this.newBlog.tags));
 
-      if (this.blog) {
-        axios.put(`http://127.0.0.1:8000/blog/update/${this.blog.id}`, blogData)
-            .then(response => {
-              console.log('블로그 글 수정 성공:', response.data);
-              this.$emit('close-dialog');
-            })
-            .catch(error => {
-              console.error('블로그 글 수정 실패:', error);
-            });
-      } else {
-        axios.post('http://127.0.0.1:8000/blog/add', blogData)
-            .then(response => {
-              console.log('블로그 글 작성 성공:', response.data);
-              this.$emit('close-dialog');
-            })
-            .catch(error => {
-              console.error('블로그 글 작성 실패:', error);
-            });
+      if (this.newBlog.image) {
+        formData.append('image', this.newBlog.image);
+      }
+
+      try {
+        if (this.blog) {
+          formData.append('_method', 'PUT');
+          await axios.post(`http://127.0.0.1:8000/blog/update/${this.blog.id}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          });
+          console.log('블로그 수정 성공');
+        } else {
+          await axios.post('http://127.0.0.1:8000/blog/add', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          });
+          console.log('블로그 작성 성공');
+        }
+        this.$emit('close-dialog');
+      } catch (error) {
+        console.error('블로그 저장 실패:', error.response);
       }
     },
     closeDialog() {

@@ -9,9 +9,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-basic-styles": "^44.3.0",
+    "@ckeditor/ckeditor5-build-inline": "^44.3.0",
+    "@ckeditor/ckeditor5-essentials": "^44.3.0",
+    "@ckeditor/ckeditor5-heading": "^44.3.0",
+    "@ckeditor/ckeditor5-link": "^44.3.0",
+    "@ckeditor/ckeditor5-list": "^44.3.0",
+    "@ckeditor/ckeditor5-paragraph": "^44.3.0",
+    "@ckeditor/ckeditor5-vue": "^7.3.0",
     "axios": "^1.8.3",
+    "dompurify": "^3.2.4",
+    "quill": "^2.0.3",
     "slick-carousel": "^1.8.1",
     "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
     "vue-slick-carousel": "^1.0.6",
     "vuetify": "^3.7.14"
   },
