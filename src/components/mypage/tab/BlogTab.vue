@@ -4,7 +4,8 @@
       <div class="blog-tab-header">
         <div class="blog-tab-write">
           <div class="blog-tab-title">개발 Blog</div>
-          <button class="write-button" @click="openDialog">작성하기</button>
+          <button v-if="isLoggedIn" class="write-button" @click="openDialog">작성하기</button>
+          <button v-else class="write-button" @click="loginDialogOpen = true">로그인</button>
         </div>
         <div class="blog-search">
           <span class="search-icon">
@@ -54,6 +55,7 @@
     <v-dialog v-model="reviewDialogVisible" class="blog_create">
       <BlogReview v-if="selectedBlog"  :blog="selectedBlog"  @close-dialog="closeReviewDialog" />
     </v-dialog>
+    <Login :isOpen="loginDialogOpen" @close="loginDialogOpen = false" @login="handleLogin" />
   </div>
 </template>
 
@@ -62,13 +64,20 @@ import Dialog from './blog/Dialog.vue';
 import { VDialog } from 'vuetify/components';
 import axios from 'axios';
 import BlogReview from "@/components/mypage/tab/blog/BlogReview.vue";
+import Login from "@/components/mypage/tab/login/Login.vue";
 
 export default {
   name: "BlogTab",
   components: {
+    Login,
     BlogReview,
     Dialog,
     VDialog
+  },
+  computed: {
+    isLoggedIn() {
+      return sessionStorage.getItem('sws-access') !== null;
+    }
   },
   data() {
     return {
@@ -88,6 +97,7 @@ export default {
       isDialogVisible: false,
       reviewDialogVisible: false,
       selectedBlog: null,
+      loginDialogOpen: false,
     };
   },
   mounted() {
@@ -157,7 +167,21 @@ export default {
         this.currentPage++;
         this.fetchBlogs();
       }
-    }
+    },
+    async  handleLogin(credentials) {
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/blog/login", credentials);
+        if (response.data.token) {
+          sessionStorage.setItem("sws-access", response.data.token);
+          alert("로그인 성공!");
+          this.loginDialogOpen = false;
+        } else {
+          alert("로그인 실패!");
+        }
+      } catch (error) {
+        console.error("로그인 오류:", error);
+      }
+    },
   }
 };
 </script>
@@ -480,6 +504,26 @@ export default {
 }
 .pagen-button:disabled {
   cursor: not-allowed;
+}
+
+.blog-tab::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.blog-tab::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.blog-tab::-webkit-scrollbar-thumb {
+  background: #CEC4CD;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.blog-tab::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 </style>

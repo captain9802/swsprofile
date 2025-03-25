@@ -12,7 +12,6 @@
         </div>
 
         <div class="content-group">
-          <label>태그</label>
           <div class="tags">
             <span v-for="(tag, index) in blog.tags" :key="index" class="tag">#{{ tag }}</span>
           </div>
@@ -20,8 +19,8 @@
       </div>
 
       <div class="button-group">
-        <button @click="deleteBlogs" class="delete-btn">삭제</button>
-        <button @click="editBlog" class="put-btn">수정</button>
+        <button v-if="isLoggedIn" @click="deleteBlogs" class="delete-btn">삭제</button>
+        <button v-if="isLoggedIn" @click="editBlog" class="put-btn">수정</button>
         <button @click="closeReviewDialog" class="cancel-btn">닫기</button>
       </div>
     </div>
@@ -58,6 +57,7 @@ export default {
     };
   },
   mounted() {
+    this.realToken = sessionStorage.getItem('sws-access');
     this.$nextTick(() => {
       const images = this.$el.querySelectorAll('.blog-contents img');
       images.forEach(img => {
@@ -72,13 +72,22 @@ export default {
   computed: {
     sanitizedContent() {
       return DOMPurify.sanitize(this.blog.content, {ALLOWED_TAGS: ['img', 'p', 'b', 'i', 'strong', 'em']});
+    },
+    isLoggedIn() {
+        return sessionStorage.getItem('sws-access') !== null;
     }
   },
   methods: {
     async deleteBlogs() {
+      if (!this.realToken) {
+        alert("로그인 후 시도해주세요.");
+        return;
+      }
       if (!confirm("정말 삭제하시겠습니까?")) return;
       try {
-        await axios.delete(`http://127.0.0.1:8000/blog/${this.blog.id}`);
+        await axios.delete(`http://127.0.0.1:8000/blog/${this.blog.id}`, {
+          headers: { 'Authorization': `Bearer ${this.realToken}` }
+        });
         this.$emit('close-dialog');
       } catch (error) {
         console.error('게시글을 삭제하는데 실패했습니다:', error);
@@ -123,6 +132,10 @@ export default {
   font-size: 1.5rem;
   font-weight: bold;
   color: #3E3E3E;
+  font-family: 'Noto Sans', sans-serif;
+  @media (max-width: 700px) {
+    font-size: 1.25rem;
+  }
 }
 
 .blog-content {
@@ -135,6 +148,7 @@ export default {
   min-height: 300px;
   overflow-y: auto;
   max-height: calc(100vh - 300px);
+  font-family: 'Noto Sans', sans-serif;
 }
 
 .content-group {
@@ -150,6 +164,9 @@ export default {
 .content-group p {
   font-size: 1rem;
   color: #555;
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
 }
 
 .tags {
@@ -164,6 +181,10 @@ export default {
   border-radius: 10px;
   font-size: 0.825rem;
   color: #3E3E3E;
+  font-family: 'Noto Sans', sans-serif;
+  @media (max-width: 700px) {
+    font-size: 10px;
+  }
 }
 
 .button-group {
@@ -178,6 +199,11 @@ export default {
   border-radius: 10px;
   color: green;
   cursor: pointer;
+  font-family: 'Noto Sans', sans-serif;
+  @media (max-width: 700px) {
+    font-size: 14px;
+    padding: 0.6rem 0.8rem;
+  }
 }
 .delete-btn {
   padding: 0.5rem 0.8rem;
@@ -185,18 +211,56 @@ export default {
   border: 1px solid red;
   color: red;
   cursor: pointer;
+  font-family: 'Noto Sans', sans-serif;
+  @media (max-width: 700px) {
+    font-size: 14px;
+    padding: 0.6rem 0.8rem;
+  }
 }
 .cancel-btn {
+  font-family: 'Noto Sans', sans-serif;
   padding: 0.5rem 0.8rem;
   border: none;
   border-radius: 10px;
   background-color: #ccc;
   color: #333;
   cursor: pointer;
+  @media (max-width: 700px) {
+    font-size: 14px;
+    padding: 0.6rem 0.8rem;
+  }
 }
 
 
 .cancel-btn:hover {
   background-color: #aaa;
 }
+
+.blog_create {
+  z-index: 100 !important;
+  max-width: 1165px;
+  width: 100%;
+}
+
+
+.blog-contents::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.blog-contents::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.blog-contents::-webkit-scrollbar-thumb {
+  background: #CEC4CD;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.blog-contents::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 </style>

@@ -72,7 +72,7 @@ export default {
         title: this.blog ? this.blog.title : '',
         content: this.blog ? this.blog.content : '',
         tags: this.blog ? this.blog.tags : [],
-        image: null
+        image: null,
       },
       availableTags: [
         'HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Node', 'Laravel',
@@ -84,6 +84,7 @@ export default {
     };
   },
   mounted() {
+    this.realToken = sessionStorage.getItem('sws-access');
     this.quillInstance = new Quill(this.$refs.editor, {
       theme: 'snow',
       modules: {
@@ -122,17 +123,20 @@ export default {
       if (this.newBlog.image) {
         formData.append('image', this.newBlog.image);
       }
-
+      if (!this.realToken) {
+        alert("로그인 후 시도해주세요.");
+        return;
+      }
       try {
-        if (this.blog) {
+        if (this.blog && this.realToken) {
           formData.append('_method', 'PUT');
           await axios.post(`http://127.0.0.1:8000/blog/update/${this.blog.id}`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: { 'Content-Type': 'multipart/form-data','Authorization': `Bearer ${this.realToken}` }
           });
           console.log('블로그 수정 성공');
         } else {
           await axios.post('http://127.0.0.1:8000/blog/add', formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${this.realToken}` }
           });
           console.log('블로그 작성 성공');
         }
@@ -280,5 +284,26 @@ textarea {
 .tag-selecte button:disabled {
   background-color: #ddd;
   cursor: not-allowed;
+}
+
+
+.v-card::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.v-card::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.v-card::-webkit-scrollbar-thumb {
+  background: #CEC4CD;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.v-card::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>
