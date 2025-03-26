@@ -48,6 +48,7 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import { VCard, VCardTitle, VCardSubtitle, VImg } from 'vuetify/components';
 import DOMPurify from 'dompurify';
+import {useToast} from "vue-toastification";
 
 export default {
   components: {
@@ -114,6 +115,7 @@ export default {
       }
     },
     async submitBlog() {
+      const toast = useToast();
       const sanitizedContent = DOMPurify.sanitize(this.quillInstance.root.innerHTML);
       const formData = new FormData();
       formData.append('title', this.newBlog.title);
@@ -124,29 +126,36 @@ export default {
         formData.append('image', this.newBlog.image);
       }
       if (!this.realToken) {
-        alert("로그인 후 시도해주세요.");
+        toast.error("토큰이 존재하지 않습니다.");
         return;
       }
       try {
         if (this.blog && this.realToken) {
           formData.append('_method', 'PUT');
-          await axios.post(`http://127.0.0.1:8000/blog/update/${this.blog.id}`, formData, {
+          const response = await axios.post(`http://127.0.0.1:8000/blog/update/${this.blog.id}`, formData, {
             headers: { 'Content-Type': 'multipart/form-data','Authorization': `Bearer ${this.realToken}` }
           });
-          console.log('블로그 수정 성공');
+          toast.success(response.data.message);
+          this.$emit('close-dialog');
         } else {
-          await axios.post('http://127.0.0.1:8000/blog/add', formData, {
+          const response = await axios.post('http://127.0.0.1:8000/blog/add', formData, {
             headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${this.realToken}` }
           });
-          console.log('블로그 작성 성공');
+          toast.success(response.data.message);
         }
         this.$emit('close-dialog');
       } catch (error) {
-        console.error('블로그 저장 실패:', error.response);
+        if(error.status === 500) {
+          toast.error(error.response.data.message);
+        } else if (error.status === 401) {
+          toast.error("정상적인 접근이 아닙니다.") ;
+        } else {
+          toast.error(error.response.data.message);
+        }
       }
     },
     closeDialog() {
-      this.$emit('close-dialog');
+      this.$emit('close-dialog', 1);
     }
   }
 };
@@ -305,5 +314,9 @@ textarea {
 
 .v-card::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.ql-container {
+  min-height: 250px;
 }
 </style>

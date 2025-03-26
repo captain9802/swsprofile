@@ -26,7 +26,7 @@
     </div>
   </v-card>
     <v-dialog v-model="putDialogVisible" class="blog_create">
-      <Dialog :isVisible="putDialogVisible" @close-dialog="closeputDialog" :blog="blog" />
+      <Dialog :isVisible="putDialogVisible" @close-dialog="closeDialog" :blog="blog"/>
     </v-dialog>
   </div>
 </template>
@@ -36,6 +36,7 @@ import Dialog from "@/components/mypage/tab/blog/Dialog.vue";
 import { VCard, VCardTitle, VImg, VDialog } from 'vuetify/components';
 import axios from "axios";
 import DOMPurify from 'dompurify';
+import {useToast} from "vue-toastification";
 
 export default {
   props: {
@@ -79,18 +80,24 @@ export default {
   },
   methods: {
     async deleteBlogs() {
+      const toast = useToast();
       if (!this.realToken) {
-        alert("로그인 후 시도해주세요.");
+        toast.error("토큰이 존재하지 않습니다.");
         return;
       }
       if (!confirm("정말 삭제하시겠습니까?")) return;
       try {
-        await axios.delete(`http://127.0.0.1:8000/blog/${this.blog.id}`, {
+        const response = await axios.delete(`http://127.0.0.1:8000/blog/${this.blog.id}`, {
           headers: { 'Authorization': `Bearer ${this.realToken}` }
         });
+        toast.success(response.data.message);
         this.$emit('close-dialog');
       } catch (error) {
-        console.error('게시글을 삭제하는데 실패했습니다:', error);
+        if(error.status === 404 || error.status === 500) {
+          toast.error(error.response.data.message);
+        } else if (error.status === 401) {
+          toast.error("정상적인 접근이 아닙니다.");
+        }
       }
     },
     editBlog() {
@@ -99,9 +106,13 @@ export default {
     closeReviewDialog() {
       this.$emit('close-dialog');
     },
-    closeputDialog() {
-      this.putDialogVisible = false;
-    }
+    closeDialog(number) {
+      if (number === 1) {
+        this.putDialogVisible = false;
+      } else {
+        this.$emit('close-dialog');
+      }
+    },
   }
 };
 </script>

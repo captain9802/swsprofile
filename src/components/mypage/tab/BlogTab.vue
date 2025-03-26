@@ -4,7 +4,7 @@
       <div class="blog-tab-header">
         <div class="blog-tab-write">
           <div class="blog-tab-title">개발 Blog</div>
-          <button v-if="isLoggedIn" class="write-button" @click="openDialog">작성하기</button>
+          <button v-if="isLoggedInState" class="write-button" @click="openDialog">작성하기</button>
           <button v-else class="write-button" @click="loginDialogOpen = true">로그인</button>
         </div>
         <div class="blog-search">
@@ -50,7 +50,7 @@
       </div>
     </div>
     <v-dialog v-model="isDialogVisible" class="blog_create">
-      <Dialog :isVisible="isDialogVisible" @close-dialog="closeDialog" />
+      <Dialog :isVisible="isDialogVisible" @close-dialog="closeDialog"/>
     </v-dialog>
     <v-dialog v-model="reviewDialogVisible" class="blog_create">
       <BlogReview v-if="selectedBlog"  :blog="selectedBlog"  @close-dialog="closeReviewDialog" />
@@ -65,6 +65,9 @@ import { VDialog } from 'vuetify/components';
 import axios from 'axios';
 import BlogReview from "@/components/mypage/tab/blog/BlogReview.vue";
 import Login from "@/components/mypage/tab/login/Login.vue";
+import {useToast} from "vue-toastification";
+import { ref } from 'vue';
+import {th} from "vuetify/locale";
 
 export default {
   name: "BlogTab",
@@ -74,13 +77,10 @@ export default {
     Dialog,
     VDialog
   },
-  computed: {
-    isLoggedIn() {
-      return sessionStorage.getItem('sws-access') !== null;
-    }
-  },
+
   data() {
     return {
+      isLoggedInState: ref(sessionStorage.getItem('sws-access') !== null),
       isOwner: false,
       currentPage: 1,
       itemsPerPage: 12,
@@ -105,6 +105,7 @@ export default {
   },
   methods: {
     async fetchBlogs() {
+      const toast = useToast();
       try {
         const response = await axios.get('http://127.0.0.1:8000/blog', {
           params: {
@@ -114,14 +115,13 @@ export default {
             tags: this.selectedTags.join(',')
           }
         });
-
         this.blogs = response.data.blogs.map(blog => ({
           ...blog,
           tags: blog.tags ? this.cleanTags(JSON.parse(blog.tags)) : []
         }));
         this.totalPages = Math.ceil(response.data.totalCount / this.itemsPerPage);
       } catch (error) {
-        console.error('게시글을 불러오는 데 실패했습니다:', error);
+        toast.error("게시글들을 불러오지 못했습니다.");
       }
     },
     cleanTags(tagsArray) {
@@ -144,10 +144,12 @@ export default {
     },
     closeDialog() {
       this.isDialogVisible = false;
+      this.fetchBlogs();
     },
     closeReviewDialog() {
       this.reviewDialogVisible = false;
       this.selectedBlog = null;
+      this.fetchBlogs();
     },
     selectBlog(blog) {
       this.selectedBlog = blog;
@@ -169,17 +171,21 @@ export default {
       }
     },
     async  handleLogin(credentials) {
+      const toast = useToast();
       try {
         const response = await axios.post("http://127.0.0.1:8000/blog/login", credentials);
-        if (response.data.token) {
+        if (response.data.status === 403) {
           sessionStorage.setItem("sws-access", response.data.token);
-          alert("로그인 성공!");
+          toast.success(response.data.message);
+          this.isLoggedInState = true;
           this.loginDialogOpen = false;
-        } else {
-          alert("로그인 실패!");
         }
       } catch (error) {
-        console.error("로그인 오류:", error);
+        if(error.status === 422) {
+          toast.error("이메일 형식이 아닙니다.");
+        } else if (error.status === 401 || error.status === 402) {
+          toast.error(error.response.data.message);
+        }
       }
     },
   }

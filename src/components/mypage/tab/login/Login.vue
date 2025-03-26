@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({ isOpen: Boolean });
 const emit = defineEmits(["close", "login"]);
@@ -27,6 +27,7 @@ const handleLogin = () => {
 const closeDialog = () => {
   emit("close");
 };
+
 </script>
 
 <style scoped>
