@@ -33,7 +33,7 @@
         </button>
       </div>
       <div class="blog-list">
-        <div class="blog-item" v-for="(blog, index) in blogs" :key="index" @click="selectBlog(blog)">
+        <div class="blog-item" v-for="(blog, index) in blogs" :key="index" @click="selectBlog(blog)" :class="{ appear: isVisible }">
           <img :src="blog.image" alt="이미지 오류" class="blog-image" />
           <div class="blog-info">
             <h2 class="blog-title" v-bind:title="blog.title">{{ blog.title }}</h2>
@@ -67,7 +67,6 @@ import BlogReview from "@/components/mypage/tab/blog/BlogReview.vue";
 import Login from "@/components/mypage/tab/login/Login.vue";
 import {useToast} from "vue-toastification";
 import { ref } from 'vue';
-import {th} from "vuetify/locale";
 
 export default {
   name: "BlogTab",
@@ -98,10 +97,14 @@ export default {
       reviewDialogVisible: false,
       selectedBlog: null,
       loginDialogOpen: false,
+      isVisible: false,
     };
   },
   mounted() {
     this.fetchBlogs();
+    setTimeout(() => {
+      this.isVisible = true;
+    }, 200);
   },
   methods: {
     async fetchBlogs() {
@@ -343,6 +346,17 @@ export default {
   align-items: center;
   text-align: center;
   cursor: pointer;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.blog-item:hover {
+  transform: scale(1.05);
+}
+.blog-item.appear {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .blog-image {
