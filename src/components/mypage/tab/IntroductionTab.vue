@@ -9,7 +9,7 @@
           <div class="introduce">
             안녕하세요, 개발자 손우성입니다.
             저는 FrontEnd 분야에서 다양한 프로젝트를 진행하고 있으며,<br> 주로 Vue와 React를 사용하고 있습니다.<br>
-            프론트엔드 외에도 SpringBoot를 활용한 백엔드 경험과 AWS, NaverCloud를 이용한 배포 작업 경험이 있습니다.<br>
+            프론트엔드 외에도 SpringBoot, Laravel를 활용한 백엔드 경험과 AWS, NaverCloud를<br> 이용한 배포 작업 경험이 있습니다.
             새로운 기술에 도전하며 그 과정에서 배우는 것을 즐기고,<br> 사용자 경험을 중심으로 한 디자인과 개발에 많은 관심을 두고 있습니다.<br>
             또한, 다양한 기술을 습득하고 이를 제 프로젝트에 적용하는 것을 좋아하며,<br> 매일 새로운 오류를 해결하며 성장하는 개발자가 되기 위해 끊임없이 노력하고 있습니다.<br>
             앞으로도 계속해서 배우고, 성장해 나가겠습니다. 감사합니다! 😊
@@ -21,7 +21,7 @@
           </div>
           <div class="tags">
             #React #Node,Js #Javascript #Html #Jpa #jQuery
-            #Css #Vue #MySQL #AWS #Nginx #SpringBoot #Thymeleaf
+            #Css #Vue #MySQL #AWS #Nginx #SpringBoot #Thymeleaf #Laravel
           </div>
         </div>
       </div>
@@ -97,6 +97,8 @@ export default {
           { name: "Spring Boot", img: "/stack/Springboot.png" },
           { name: "Node.js", img: "/stack/node.png" },
           { name: "Gradle", img: "/stack/gradle.png" },
+          { name: "PHP", img: "/stack/php.png" },
+          { name: "Laravel", img: "/stack/Laravel.png" },
       ],
       serverStacks: [
           { name: "AWS ", img: "/stack/AWS.png" },

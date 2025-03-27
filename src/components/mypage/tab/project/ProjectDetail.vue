@@ -150,8 +150,17 @@ export default {
               "● 소개 탭 (IntroductionTab)\n\n" +
               "- 개발자 자기소개 및 기술 스택을 표시.\n\n" +
               "● 프로젝트 상세 페이지 (Project Detail)\n\n" +
-              "- 각 프로젝트의 제목, 기간, 기술 스택, 설명 등을 포함한 상세 정보 제공.\n",
-          tech: "Vue, NginX, AWS, JavaScript, HTML/CSS3, Ubuntu",
+              "- 각 프로젝트의 제목, 기간, 기술 스택, 설명 등을 포함한 상세 정보 제공.\n\n" +
+              "● 블로그 탭 (BlogTab)\n\n" +
+                  "- 사용자가 학습한 내용을 정리하여 게시글을 작성, 수정, 삭제 가능.\n" +
+              "- 로그인한 사용자만 글 작성 가능하며, JWT 토큰을 활용한 인증 및 권한 관리.\n" +
+              "- 게시글 클릭 시 상세 페이지(BlogReview)에서 내용 확인 가능.\n" +
+              "- 제목 검색 및 태그 필터링 기능 제공 (최대 3개 태그 선택 가능).\n" +
+              "- Quill 에디터를 활용하여 HTML 및 이미지 포함된 게시글 작성 가능.\n" +
+              "- 모든 이미지는 AWS S3와 연동하여 저장 및 불러오기 처리.\n" +
+              "- XSS 공격 방지를 위해 DOMPurify를 활용하여 HTML 내용 필터링.\n" +
+              "- 페이지네이션을 지원하여 여러 개의 게시글을 효율적으로 관리.\n",
+          tech: "Vue, NginX, AWS, JavaScript, HTML/CSS3, Ubuntu, Php, Laravel",
         },
         1: {
           date: "24. 11 ~ 25. 01 / 1人",
