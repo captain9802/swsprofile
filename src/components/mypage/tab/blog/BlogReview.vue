@@ -8,7 +8,7 @@
 
       <div class="blog-content">
         <div class="content-group">
-          <p class="blog-contents" v-html="sanitizedContent"></p>
+          <div class="blog-contents"><p class="ql-editor" v-html="sanitizedContent"></p></div>
         </div>
 
         <div class="content-group">
@@ -37,6 +37,8 @@ import { VCard, VCardTitle, VImg, VDialog } from 'vuetify/components';
 import axios from "axios";
 import DOMPurify from 'dompurify';
 import {useToast} from "vue-toastification";
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css';
 
 export default {
   props: {
@@ -60,25 +62,60 @@ export default {
   mounted() {
     this.realToken = sessionStorage.getItem('sws-access');
     this.$nextTick(() => {
+      const codeElements = this.$el.querySelectorAll('.ql-editor code');
+      codeElements.forEach(code => {
+        code.style.setProperty('font-family', "'Noto Sans', sans-serif", 'important');
+      });
       const images = this.$el.querySelectorAll('.blog-contents img');
       images.forEach(img => {
         img.style.maxWidth = '100%';
-        img.style.hegiht = 'auto';
         img.style.height = 'auto';
         img.style.display = 'block';
         img.style.margin = '0 auto';
       });
+      const codeBlocks = this.$el.querySelectorAll('.ql-code-block');
+      codeBlocks.forEach(block => {
+        block.style.whiteSpace = 'pre-wrap';
+        block.style.backgroundColor = '#2b2b2b';
+        block.style.padding = '3px';
+        block.style.fontSize = '14px';
+        block.style.overflowX = 'auto';
+        block.style.fontFamily = 'Noto Sans, sans-serif'
+      });
+      this.highlightCodeBlocks();
     });
+  },
+  updated() {
+    this.highlightCodeBlocks();
   },
   computed: {
     sanitizedContent() {
-      return DOMPurify.sanitize(this.blog.content, {ALLOWED_TAGS: ['img', 'p', 'b', 'i', 'strong', 'em']});
+      let content = this.blog.content;
+      content = DOMPurify.sanitize(content, {
+        ALLOWED_TAGS: [
+          'img', 'p', 'b', 'i', 'strong', 'em',
+          'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+          'ul', 'ol', 'li', 'br', 'div', 'pre', 'code',
+          'a', 'strike', 'blockquote', 'hr', 'sub', 'span',
+        ],
+        ALLOWED_ATTR: ['class'],
+      });
+      return content;
     },
     isLoggedIn() {
         return sessionStorage.getItem('sws-access') !== null;
     }
   },
   methods: {
+    highlightCodeBlocks() {
+      const codeBlocks = this.$el.querySelectorAll('.blog-contents .ql-code-block-container .ql-code-block');
+      if (codeBlocks.length > 0) {
+        codeBlocks.forEach((block) => {
+          block.innerHTML = block.innerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          hljs.highlightElement(block);
+        });
+      }
+    },
     async deleteBlogs() {
       const toast = useToast();
       if (!this.realToken) {
@@ -159,7 +196,7 @@ export default {
   min-height: 300px;
   overflow-y: auto;
   max-height: calc(100vh - 300px);
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Noto Sans', sans-serif !important;
 }
 
 .content-group {

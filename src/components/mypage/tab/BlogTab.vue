@@ -86,10 +86,9 @@ export default {
       totalPages: 0,
       searchQuery: "",
       availableTags: [
-        'HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Node', 'Laravel',
-        'jQuery', 'Thymeleaf', 'Zustand', 'Redux', 'Framer-Motion',
-        'Styled Component', 'React Chart', 'Java', 'Spring Boot', 'Gradle',
-        'AWS', 'Naver Cloud', 'Nginx', 'Ubuntu', 'MySQL', '일본어', '정보처리기사', '코딩테스트'
+        'HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Laravel',
+        'jQuery', 'Java', 'Spring Boot',
+        'AWS', 'Nginx', 'Ubuntu', 'MySQL', '일본어', '코딩테스트'
       ],
       selectedTags: [],
       blogs: [],
