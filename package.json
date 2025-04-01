@@ -9,14 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-basic-styles": "^44.3.0",
-    "@ckeditor/ckeditor5-build-inline": "^44.3.0",
-    "@ckeditor/ckeditor5-essentials": "^44.3.0",
-    "@ckeditor/ckeditor5-heading": "^44.3.0",
-    "@ckeditor/ckeditor5-link": "^44.3.0",
-    "@ckeditor/ckeditor5-list": "^44.3.0",
-    "@ckeditor/ckeditor5-paragraph": "^44.3.0",
-    "@ckeditor/ckeditor5-vue": "^7.3.0",
     "axios": "^1.8.3",
     "dompurify": "^3.2.4",
     "highlight.js": "^11.11.1",

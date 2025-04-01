@@ -97,6 +97,16 @@ export default {
         ]
       }
     });
+    this.$nextTick(() => {
+      const toolbar = document.querySelector('.ql-toolbar.ql-snow');
+      if (toolbar) {
+        toolbar.style.position = 'sticky';
+        toolbar.style.top = '0';
+        toolbar.style.zIndex = '1000';
+        toolbar.style.backgroundColor = 'white';
+        toolbar.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+      }
+    });
 
     if (this.newBlog.content) {
       this.quillInstance.root.innerHTML = this.newBlog.content;
@@ -314,4 +324,13 @@ textarea {
 .v-card::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.ql-toolbar.ql-snow {
+  position: sticky !important;
+  top: 0 !important; /* 툴바가 화면 상단에 고정되도록 설정 */
+  z-index: 1000 !important; /* 다른 콘텐츠 위에 나타나도록 z-index 설정 */
+  background-color: #fff !important; /* 배경색을 지정하면 투명한 배경을 방지할 수 있음 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important; /* 약간의 그림자를 주어 툴바가 돋보이게 할 수 있음 */
+}
+
 </style>

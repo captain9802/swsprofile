@@ -2,7 +2,7 @@
   <div v-if="isOpen" class="dialog-overlay" @click.self="closeDialog">
     <div class="dialog">
       <div class="title">로그인</div>
-      <input type="text" v-model="email" placeholder="이메일" class="email-input"/>
+      <input type="email" v-model="email" placeholder="이메일" class="email-input"/>
       <input type="password" v-model="password" placeholder="비밀번호" class="password-input"/>
       <div class="btn">
       <button @click="handleLogin" class="login-btn">로그인</button>

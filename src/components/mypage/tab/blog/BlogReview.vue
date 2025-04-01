@@ -82,6 +82,10 @@ export default {
         block.style.overflowX = 'auto';
         block.style.fontFamily = 'Noto Sans, sans-serif'
       });
+      const indentList = this.$el.querySelectorAll('.ql-editor li, .ql-indent-1:not(.ql-direction-rtl), .ql-editor .ql-indent-1:not(.ql-direction-rtl)');
+      indentList.forEach(li => {
+        li.style.padding = '0';
+      });
       this.highlightCodeBlocks();
     });
   },
@@ -211,7 +215,7 @@ export default {
 
 .content-group p {
   font-size: 1rem;
-  color: #555;
+  color: #3E3E3E;
   @media (max-width: 700px) {
     font-size: 14px;
   }
@@ -309,6 +313,11 @@ export default {
 
 .blog-contents::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.ql-editor {
+  padding: 0;
+  color: #3E3E3E;
 }
 
 </style>
