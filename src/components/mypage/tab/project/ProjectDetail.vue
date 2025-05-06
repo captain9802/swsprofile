@@ -7,14 +7,21 @@
       <span class="v-date">({{ projectInfo.date }})</span>
       <div class="project-tech">주 기술 : {{ projectInfo.tech }}</div>
     </v-card-title>
-    <div> <a v-if="project.index === 0"
+    <div>
+      <a v-if="project.index === 0"
+         href="https://sws-jlpt.com/"
+         target="_blank"
+         class="project-url">
+        www.sws-jlpt.com
+      </a>
+      <a v-if="project.index === 1"
              href="https://sws-portfolio.com/"
              target="_blank"
              class="project-url">
       www.sws-portfoilo.com
     </a>
 
-      <a v-else-if="project.index === 1"
+      <a v-else-if="project.index === 2"
          href="https://jongnol.site"
          target="_blank"
          class="project-url">
@@ -74,6 +81,26 @@ export default {
       index: 0,
       images: [
         [
+          "/jlpt/1.png",
+          "/jlpt/2.png",
+          "/jlpt/3.png",
+          "/jlpt/4.png",
+          "/jlpt/5.png",
+          "/jlpt/6.png",
+          "/jlpt/7.png",
+          "/jlpt/8.png",
+          "/jlpt/9.png",
+          "/jlpt/10.png",
+          "/jlpt/11.png",
+          "/jlpt/12.png",
+          "/jlpt/13.png",
+          "/jlpt/14.png",
+          "/jlpt/15.png",
+          "/jlpt/16.png",
+          "/jlpt/17.png",
+          "/jlpt/18.png",
+        ],
+        [
           "/sws/sws_0.png",
           "/sws/sws_1.png",
           "/sws/sws_2.png",
@@ -131,6 +158,40 @@ export default {
     projectInfo() {
       const projects = {
         0: {
+          date: "25. 03 ~ 25. 05 / 1人",
+          description: "'SWS-JLPT'는 JLPT 일본어 단어·문법·문장을 AI와 함께 학습할 수 있도록 개발한 개인 프로젝트입니다. GPT API, JWT 인증, 컴포넌트 재사용, 학습 데이터 자동화 등 다양한 기술을 실전으로 구현한 프로젝트입니다.",
+          features: "구현한 페이지 및 기능:\n\n" +
+              "● 로그인 및 사용자 인증\n\n" +
+              "- 카카오 소셜 로그인 연동 및 백엔드 인증 처리.\n" +
+              "- JWT 기반 인증 시스템 구축으로 사용자별 학습 정보 분리.\n\n" +
+              "● 메인 대화 페이지 (Chat)\n\n" +
+              "- AI 캐릭터와 실시간 일본어 대화 구현 (GPT 연동).\n" +
+              "- 문장 속 단어/문법 자동 분석 및 툴팁(TTS/뜻/번역/즐겨찾기) 제공.\n" +
+              "- 캐릭터 설정(이름/성격/말투/목소리) 및 JLPT 레벨 설정 가능.\n\n" +
+              "● 즐겨찾기 기능 (단어/문법/문장)\n\n" +
+              "- 리스트(단어장, 문법장, 문장집) 단위로 항목을 저장/관리.\n" +
+              "- 각 리스트는 카드형 UI로 출력되며, 제목 수정 및 삭제 가능.\n" +
+              "- 문법·문장은 예시 문장과 함께 저장되며 자동 퀴즈와 연결.\n\n" +
+              "● 퀴즈 기능 (단어/문법/문장)\n\n" +
+              "- 즐겨찾기를 기반으로 한 맞춤형 퀴즈 제공 (4지선다, 빈칸 채우기 등).\n" +
+              "- 정답/오답 결과 확인 및 복습 유도 UI 구현.\n\n" +
+              "● 히라가나 / 가타카나 학습 및 게임\n\n" +
+              "- 기본 문자를 카드 UI로 제공하며, 한국어 발음 함께 표시.\n" +
+              "- 카드 클릭형 게임을 통해 재미있는 반복 학습 제공.\n\n" +
+              "● 핵심 기술 요약\n\n" +
+              "- GPT API 연동을 통한 실시간 일본어 분석 및 대화 처리.\n" +
+              "- JWT 인증 시스템과 사용자별 DB 구조 설계.\n" +
+              "- Laravel API + Vue 프론트 구조 완전 분리 및 통합 배포 (Nginx).\n" +
+              "- 반응형 UI, 컴포넌트 재사용 구조 설계, 동적 퀴즈 로직 구현.\n\n" +
+              "● 향후 예정 기능\n\n" +
+              "- 대화 요약 및 메모리 기반 대화 지속 기능\n" +
+              "- 이전 채팅 내역 불러오기 및 이어서 대화하기\n" +
+              "- 설정값에 따라 목소리 스타일 변경 (TTS 설정 커스터마이징)\n" +
+              "- 마이크 입력 기능 추가 (음성으로 AI 대화)\n" +
+              "- 단어/문법 통계 기반 추천 학습 제공 (AI 피드백 기능)\n",
+          tech: "Vue, Laravel, JavaScript, JWT, Nginx, AWS EC2, MySQL, GPT-3.5/4.0 API, Kakao Login, Ubuntu"
+        },
+        1: {
           date: "25. 02 ~ 25. 03 / 1人",
           description: "'SWS-Portfolio'는 손우성이라는 개발자를 소개하기 위해 만든 프로젝트입니다.",
           features: "구현한 페이지 및 기능:\n\n" +
@@ -162,7 +223,7 @@ export default {
               "- 페이지네이션을 지원하여 여러 개의 게시글을 효율적으로 관리.\n",
           tech: "Vue, NginX, AWS, JavaScript, HTML/CSS3, Ubuntu, Php, Laravel",
         },
-        1: {
+        2: {
           date: "24. 11 ~ 25. 01 / 1人",
           description: "'JongNol’은 사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스입니다",
           features:
@@ -199,7 +260,7 @@ export default {
               "- 비밀번호 유효성 검사 - 비밀번호의 유효성을 체크하고, 비밀번호 확인이 일치하는지 검증.",
           tech: "Java17, SpringBoot, React, Node.js, NginX, AWS, S3, MySQL, JavaScript, HTML/CSS3, Ubuntu",
         },
-        2: {
+        3: {
           date: "24. 02 ~ 24. 04 / 3人",
           description: "'NC4All’은 누구나 강사가 되어 자신만의 강의를 올릴 수 있는 개발자들을 위한 온라인 강의 웹 서비스입니다.",
           features:
@@ -229,7 +290,7 @@ export default {
               "- 문의내역: 사용자가 문의를 작성하고, 관리자의 답변 상태를 실시간으로 표시. 문의가 처리되면 완료 문구와 답변 내용 확인 가능.",
           tech: "Java17, SpringBoot, React, Node.js, NginX, NaverCloud, MySQL, JavaScript, HTML/CSS3",
         },
-        3: {
+        4: {
           date: "24. 01 ~ 24. 02 / 5人",
           description:
               "‘secondStory’는 자신의 중고 물품들을 경매를 통해 사람들에게 거래할 수 있도록 도와주는 다양한 기능을 제공하는 웹 서비스입니다.",

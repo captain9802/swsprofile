@@ -125,7 +125,7 @@ export default {
       }
       if (!confirm("정말 삭제하시겠습니까?")) return;
       try {
-        const response = await axios.delete(`http://127.0.0.1:8000/blog/${this.blog.id}`, {
+        const response = await axios.delete(`https://sws-portfolio.com/blog/${this.blog.id}`, {
           headers: { 'Authorization': `Bearer ${this.realToken}` }
         });
         toast.success(response.data.message);

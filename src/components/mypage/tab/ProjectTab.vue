@@ -55,13 +55,14 @@ export default {
   components: { VDialog, ProjectDetail },
   setup() {
     const projects = ref([
-      { name: "SWS-Portfolio", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/project1.png",main: "/jongnol/1.png", index: 0 },
+      { name: "SWS-Jlpt", description: "Jlpt 일본어 학습을 위한 대화 공부 사이트.", image: "/jongnol/jlpt1.png",main: "/jongnol/jlpt0.png", index: 0 },
+      { name: "SWS-Portfolio", description: "개발자 손우성을 소개하는 포트폴리오 사이트.", image: "/jongnol/project1.png",main: "/jongnol/1.png", index: 1 },
       { name: "JNL – JongNoL", description: "사용자가 직접 퀴즈를 만들고 공유하며, 다른 사람들이 이를 풀면서 재미와 지식을 동시에 얻을 수 있는 서비스.",
-        image: "/jongnol/project2.png",main: "/jongnol/3.png",  index: 1 },
+        image: "/jongnol/project2.png",main: "/jongnol/3.png",  index: 2 },
       { name: "NC4All-NextClassForAll", description: "누구나 강사가 되어 자신만의 강의를 올릴 수 있는 개발자들을 위한 온라인 강의 서비스.",
-        image: "/jongnol/project3.png",main: "/jongnol/2.png",  index: 2 },
+        image: "/jongnol/project3.png",main: "/jongnol/2.png",  index: 3 },
       { name: "secondSTORY", description: "자신의 중고 물품들을 경매를 통해 사람들에게 거래 할 수 있게 도와주는 다양한 기능을 제공하는 웹 서비스.",
-        image: "/jongnol/project4.png",main: "/jongnol/main3.png",  index: 3 },
+        image: "/jongnol/project4.png",main: "/jongnol/main3.png",  index: 4 },
     ]);
 
     const currentIndex = ref(0);

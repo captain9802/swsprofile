@@ -23,7 +23,7 @@
       <p class="introduction-hi">
         안녕하세요! 기술에 대한 도전과 다양한 기능을 구현하는 것을 즐기는 손우성입니다. <br>
 
-        풀스택 개발에 관심을 두고 React, Vue.js, SpringBoot, Java17 등을 중심으로 다양한 프로젝트를 진행해왔습니다.<br> JavaScript, HTML/CSS3를 활용해 웹 경험을 개선하고, 사용자 친화적인 인터페이스를 만드는 데 노력하고 있습니다.
+        풀스택 개발에 관심을 두고 React, Vue.js, Laravel, SpringBoot, Java17 등을 중심으로 다양한 프로젝트를 진행해왔습니다.<br> JavaScript, HTML/CSS3를 활용해 웹 경험을 개선하고, 사용자 친화적인 인터페이스를 만드는 데 노력하고 있습니다.
 
         또한, NaverCloud, AWS, S3 등의 클라우드 환경과 배포에 대한 경험도 있어, 개발과 배포 과정에서 원활한 협업이 가능합니다.<br>
 
