@@ -4,6 +4,7 @@ import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import './assets/main.css'
 
 const vuetify = createVuetify({
     theme: { dark: false },

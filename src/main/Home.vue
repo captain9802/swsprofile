@@ -1,12 +1,14 @@
 <template>
-  <div class="layout">
-    <div class="left">
+  <div class="layout min-h-screen bg-white text-black dark:bg-[#121212] dark:text-white transition-colors duration-300">
+    <div class="left bg-[#A28974] dark:bg-[#2c2c2c] p-5">
       <MyIntroduction />
     </div>
-    <div class="tab">
+
+    <div class="tab bg-[#A28974] dark:bg-[#2c2c2c]">
       <MyTab :selectedTab="selectedTab" @tab-selected="changeProjectContent" />
     </div>
-    <div class="project">
+
+    <div class="project bg-[#A28974] dark:bg-[#1e1e1e] text-black dark:text-white flex-grow p-5 flex items-center justify-center font-bold text-lg">
       <component :is="selectedComponent" />
     </div>
   </div>
@@ -22,83 +24,75 @@ import BlogTab from "@/components/mypage/tab/BlogTab.vue";
 
 export default {
   name: "MyPage",
-  components: { MyTab, MyIntroduction, IntroductionTab, ProjectTab, CareerTab, Blog: BlogTab },
+  components: {
+    MyTab,
+    MyIntroduction,
+    IntroductionTab,
+    ProjectTab,
+    CareerTab,
+    Blog: BlogTab,
+  },
   data() {
     return {
-      selectedTab: "introduction"
+      selectedTab: "introduction",
     };
   },
   computed: {
     selectedComponent() {
-      return this.selectedTab === "project"
-          ? ProjectTab
-          : this.selectedTab === "career"
-              ? CareerTab
-              : this.selectedTab === "blog"
-                  ? BlogTab
-                  : IntroductionTab;
-    }
+      return (
+          {
+            project: ProjectTab,
+            career: CareerTab,
+            blog: BlogTab,
+          }[this.selectedTab] || IntroductionTab
+      );
+    },
   },
   methods: {
     changeProjectContent(tabName) {
       this.selectedTab = tabName;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-body {
-  margin: 0;
-}
-
+<style>
 .layout {
   display: flex;
   width: 100%;
   height: 100vh;
+  flex-direction: row;
+  transition: all 0.3s ease;
+}
 
-  @media (max-width: 1200px) {
+@media (max-width: 1200px) {
+  .layout {
     flex-direction: column;
     height: auto;
   }
-}
 
-.left {
-  width: 678px;
-  padding: 20px;
-  background-color: #A28974;
-
-  @media (max-width: 1200px) {
-    width: 100%;
-    padding: 20px;
+  .left,
+  .tab,
+  .project {
+    width: 100% !important;
   }
-}
 
-.tab {
-  width: 60px;
-  background-color: #A28974;
-
-  @media (max-width: 1200px) {
-    width: 100%;
+  .tab {
     height: 50px;
     display: flex;
     justify-content: center;
   }
 }
 
+.left {
+  width: 678px;
+}
+
+.tab {
+  width: 60px;
+}
+
 .project {
   flex-grow: 1;
-  background-color: #A28974 ;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  color: #141111;
-  @media (max-width: 1200px) {
-    width: 100%;
-  }
 }
 </style>
