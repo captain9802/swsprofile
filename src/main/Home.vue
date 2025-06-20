@@ -8,7 +8,7 @@
       <MyTab :selectedTab="selectedTab" @tab-selected="changeProjectContent" />
     </div>
 
-    <div class="project bg-[#A28974] dark:bg-[#1e1e1e] text-black dark:text-white flex-grow p-5 flex items-center justify-center font-bold text-lg">
+    <div class="project bg-[#A28974] dark:bg-[#2c2c2c] text-black dark:text-white flex-grow p-5 flex items-center justify-center font-bold text-lg">
       <component :is="selectedComponent" />
     </div>
   </div>
