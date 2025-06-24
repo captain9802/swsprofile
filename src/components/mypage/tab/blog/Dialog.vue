@@ -1,5 +1,5 @@
 <template>
-  <v-card class="v-card">
+  <v-card class="v-card dark:bg-[#1e1e1e] dark:text-white">
     <div class="dialog-container">
       <v-card-title class="v-card-title">
         <v-img src="path_to_your_image.jpg" max-width="40" class="v-img"></v-img>
@@ -170,7 +170,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .v-card {
   margin: 0;
@@ -178,6 +177,10 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+}
+.dark .v-card {
+  background-color: #1e1e1e;
+  color: white;
 }
 
 .v-card-title {
@@ -198,6 +201,9 @@ export default {
   font-weight: bold;
   color: #3E3E3E;
 }
+.dark .headline {
+  color: #ffffff;
+}
 
 .dialog-container {
   display: grid;
@@ -215,6 +221,9 @@ export default {
   font-weight: bold;
   color: #3E3E3E;
 }
+.dark .input-group label {
+  color: #ffffff;
+}
 
 .input-group input,
 .input-group textarea {
@@ -224,6 +233,13 @@ export default {
   border: 1px solid #ddd;
   font-size: 1rem;
   color: #3E3E3E;
+  background-color: #fff;
+}
+.dark .input-group input,
+.dark .input-group textarea {
+  background-color: #2a2a2a;
+  border: 1px solid #555;
+  color: #ffffff;
 }
 
 .input-group input:focus,
@@ -251,13 +267,11 @@ textarea {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
-
 }
 
 .submit-btn {
   background-color: #D17A22;
   color: white;
-  font-size: 1rem;
 }
 
 .submit-btn:hover {
@@ -288,10 +302,27 @@ textarea {
   cursor: pointer;
   font-size: 0.825rem;
   transition: background-color 0.3s;
+  color: #3E3E3E;
+}
+.dark .tag-selecte button {
+  background-color: #2f2f2f;
+  color: #e0e0e0;
+  border: 1px solid #444;
 }
 
-.tag-selecte button:hover {
-  background-color: #A28974;
+.dark .tag-selecte button:hover {
+  background-color: #3c3c3c;
+}
+
+.dark .tag-selecte button.selected {
+  background-color: #555;
+  color: #fff;
+}
+
+.dark .tag-selecte button:disabled {
+  background-color: #3a3a3a;
+  color: #999;
+  cursor: not-allowed;
 }
 
 .tag-selecte button.selected {
@@ -303,7 +334,9 @@ textarea {
   background-color: #ddd;
   cursor: not-allowed;
 }
-
+.dark .tag-selecte button:disabled {
+  background-color: #555;
+}
 
 .v-card::-webkit-scrollbar {
   width: 8px;
@@ -324,5 +357,4 @@ textarea {
 .v-card::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 </style>

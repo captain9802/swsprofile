@@ -1,12 +1,12 @@
 <template>
-  <div class="tab-content-myprofile">
+  <div class="tab-content-myprofile dark:bg-[#1e1e1e] transition-colors duration-300">
     <div class="tab-content">
       <div class="profile-container">
         <div class="introduce-section">
           <div class="text-with-line">
             <div class="text-with-line-text">INTRODUCE</div>
           </div>
-          <div class="introduce">
+          <div class="introduce dark:text-[#e0e0e0]">
             안녕하세요, 개발자 손우성입니다.
             저는 FrontEnd 분야에서 다양한 프로젝트를 진행하고 있으며,<br> 주로 Vue와 React를 사용하고 있습니다.<br>
             프론트엔드 외에도 SpringBoot, Laravel를 활용한 백엔드 경험과 AWS, NaverCloud를<br> 이용한 배포 작업 경험이 있습니다.
@@ -19,51 +19,19 @@
           <div class="text-with-line">
             <div class="text-with-line-text">TAGS</div>
           </div>
-          <div class="tags">
+          <div class="tags dark:text-[#e0e0e0]">
             #React #Node,Js #Javascript #Html #Jpa #jQuery
             #Css #Vue #MySQL #AWS #Nginx #SpringBoot #Thymeleaf #Laravel
           </div>
         </div>
       </div>
-      <div class="stack-container">
+
+      <div class="stack-container" v-for="(stacks, title) in stackSections" :key="title">
         <div class="text-with-line">
-          <div class="text-with-line-text">FrontEnd Stack</div>
+          <div class="text-with-line-text">{{ title }}</div>
         </div>
         <div class="stack-list">
-          <div class="stack-item" v-for="stack in frontendStacks" :key="stack.name">
-            <img :src="stack.img" :alt="stack.name" />
-            <span>{{ stack.name }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="stack-container">
-        <div class="text-with-line">
-          <div class="text-with-line-text">BackEnd Stack</div>
-        </div>
-        <div class="stack-list">
-          <div class="stack-item" v-for="stack in backendStacks" :key="stack.name">
-            <img :src="stack.img" :alt="stack.name" />
-            <span>{{ stack.name }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="stack-container">
-        <div class="text-with-line">
-          <div class="text-with-line-text">Server & Cloud</div>
-        </div>
-        <div class="stack-list">
-          <div class="stack-item" v-for="stack in serverStacks" :key="stack.name">
-            <img :src="stack.img" :alt="stack.name" />
-            <span>{{ stack.name }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="stack-container">
-        <div class="text-with-line">
-          <div class="text-with-line-text">Collaboration Tools</div>
-        </div>
-        <div class="stack-list">
-          <div class="stack-item" v-for="stack in collaboratorStacks" :key="stack.name">
+          <div class="stack-item dark:text-[#e0e0e0]" v-for="stack in stacks" :key="stack.name">
             <img :src="stack.img" :alt="stack.name" />
             <span>{{ stack.name }}</span>
           </div>
@@ -93,28 +61,38 @@ export default {
         { name: "CSS", img: "/stack/css.png" },
       ],
       backendStacks: [
-          { name: "Java", img: "/stack/java.png" },
-          { name: "Spring Boot", img: "/stack/Springboot.png" },
-          { name: "Node.js", img: "/stack/node.png" },
-          { name: "Gradle", img: "/stack/gradle.png" },
-          { name: "PHP", img: "/stack/php.png" },
-          { name: "Laravel", img: "/stack/Laravel.png" },
+        { name: "Java", img: "/stack/java.png" },
+        { name: "Spring Boot", img: "/stack/Springboot.png" },
+        { name: "Node.js", img: "/stack/node.png" },
+        { name: "Gradle", img: "/stack/gradle.png" },
+        { name: "PHP", img: "/stack/php.png" },
+        { name: "Laravel", img: "/stack/Laravel.png" },
       ],
       serverStacks: [
-          { name: "AWS ", img: "/stack/AWS.png" },
-          { name: "Naver Cloud", img: "/stack/naver.png" },
-          { name: "Nginx", img: "/stack/nginx.png" },
-          { name: "Ubuntu", img: "/stack/ubuntu.png" },
-          { name: "MySql", img: "/stack/mysql.png" },
+        { name: "AWS ", img: "/stack/AWS.png" },
+        { name: "Naver Cloud", img: "/stack/naver.png" },
+        { name: "Nginx", img: "/stack/nginx.png" },
+        { name: "Ubuntu", img: "/stack/ubuntu.png" },
+        { name: "MySql", img: "/stack/mysql.png" },
       ],
       collaboratorStacks: [
-          { name: "GitHub", img: "/stack/github.png" },
-          { name: "Jira", img: "/stack/jira.png" },
-          { name: "Pisxo", img: "/stack/pisxo.png" },
-          { name: "Figma", img: "/stack/figma.png" },
+        { name: "GitHub", img: "/stack/github.png" },
+        { name: "Jira", img: "/stack/jira.png" },
+        { name: "Pisxo", img: "/stack/pisxo.png" },
+        { name: "Figma", img: "/stack/figma.png" },
       ]
     };
   },
+  computed: {
+    stackSections() {
+      return {
+        "FrontEnd Stack": this.frontendStacks,
+        "BackEnd Stack": this.backendStacks,
+        "Server & Cloud": this.serverStacks,
+        "Collaboration Tools": this.collaboratorStacks,
+      };
+    }
+  }
 };
 </script>
 
@@ -125,6 +103,7 @@ export default {
   border-radius: 10px;
   height: 100%;
   overflow: auto;
+  transition: all 0.3s ease;
 }
 
 .tab-content {
@@ -145,7 +124,6 @@ export default {
 .introduce-section {
   flex: 3;
 }
-
 .tags-section {
   flex: 1;
 }
@@ -177,16 +155,19 @@ export default {
   color: #8B5E3B;
 }
 
-.introduce {
+.dark .text-with-line::before,
+.dark .text-with-line::after {
+  background-color: #b8926a;
+}
+.dark .text-with-line-text {
+  color: #b8926a;
+}
+
+.introduce,
+.tags {
   font-size: 16px;
   line-height: 1.7;
   font-weight: 600;
-  color: #3E3E3E;
-
-}
-.tags {
-  font-size: 15px;
-  line-height: 1.6;
   color: #3E3E3E;
 }
 
@@ -218,10 +199,10 @@ export default {
   @media (max-width: 1200px) {
     padding: 0;
   }
+
   @media (max-width: 1200px) {
     width: 89px;
   }
-
 }
 
 .stack-item img {
@@ -229,7 +210,6 @@ export default {
   height: 70px;
   margin-bottom: 5px;
 }
-
 .stack-item span {
   flex-grow: 1;
   display: flex;
@@ -254,5 +234,13 @@ export default {
 
 .tab-content-myprofile::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.dark .tab-content-myprofile::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+.dark .tab-content-myprofile::-webkit-scrollbar-thumb {
+  background: #888;
 }
 </style>

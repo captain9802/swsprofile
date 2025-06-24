@@ -1,38 +1,44 @@
 <template>
-  <v-card class="v-card" :key="project.index">
+  <v-card class="v-card dark:bg-[#1e1e1e] dark:text-white" :key="project.index">
     <v-img class="v-img" :src="project.main" contain alt="Project Image"></v-img>
 
     <v-card-title class="v-card-title">
-      <span class="project-name">{{ project.name }}</span>
-      <span class="v-date">({{ projectInfo.date }})</span>
-      <div class="project-tech">주 기술 : {{ projectInfo.tech }}</div>
+      <span class="project-name dark:text-white">{{ project.name }}</span>
+      <span class="v-date dark:text-gray-300">({{ projectInfo.date }})</span>
+      <div class="project-tech dark:text-gray-300">주 기술 : {{ projectInfo.tech }}</div>
     </v-card-title>
+
     <div>
       <a v-if="project.index === 0"
          href="https://sws-jlpt.com/"
          target="_blank"
-         class="project-url">
+         class="project-url dark:text-blue-400 hover:underline">
         www.sws-jlpt.com
       </a>
       <a v-if="project.index === 1"
-             href="https://sws-portfolio.com/"
-             target="_blank"
-             class="project-url">
-      www.sws-portfoilo.com
-    </a>
-
+         href="https://sws-portfolio.com/"
+         target="_blank"
+         class="project-url dark:text-blue-400 hover:underline">
+        www.sws-portfoilo.com
+      </a>
       <a v-else-if="project.index === 2"
          href="https://jongnol.site"
          target="_blank"
-         class="project-url">
+         class="project-url dark:text-blue-400 hover:underline">
         www.jongnol.site
-      </a></div>
+      </a>
+    </div>
+
     <div v-if="!hasHiddenImages">
-      <span class="project-img" @click="toggleImageSlider">프로젝트 상세 이미지 보기 {{ isSliderOpen ? '▲' : '▼' }}</span>
+      <span class="project-img dark:text-gray-200" @click="toggleImageSlider">
+        프로젝트 상세 이미지 보기 {{ isSliderOpen ? '▲' : '▼' }}
+      </span>
+
       <div v-if="imageSliderOpen" class="image-slider-container">
         <button class="prev-button" @click="prevSlide" :disabled="index === 0">
           <img class="img-prev" :src="index === 0 ? '/cprev.png' : '/prev1.png'" alt="이전 버튼">
         </button>
+
         <div class="image-slider">
           <div class="image-slide" v-for="(img, i) in visibleImages" :key="i">
             <img
@@ -43,18 +49,26 @@
             />
           </div>
         </div>
+
         <button class="next-button" @click="nextSlide" :disabled="index + visibleCount >= images[project.index].length">
           <img class="img-next" :src="index + visibleCount >= images[project.index].length ? '/cnext.png' : '/next1.png'" alt="다음 버튼">
         </button>
       </div>
     </div>
-    <v-card-subtitle class="v-card-subtitle">{{ projectInfo.description }}</v-card-subtitle>
-    <v-card-subtitle class="v-card-description">{{ projectInfo.features }}</v-card-subtitle>
+
+    <v-card-subtitle class="v-card-subtitle dark:text-gray-300">
+      {{ projectInfo.description }}
+    </v-card-subtitle>
+    <v-card-subtitle class="v-card-description dark:text-gray-300">
+      {{ projectInfo.features }}
+    </v-card-subtitle>
+
     <div v-if="selectedImage" class="image-modal" @click="closeImage">
       <img :src="selectedImage" alt="Expanded Image" class="expanded-image"/>
     </div>
   </v-card>
 </template>
+
 
 <script>
 import { VCard, VCardTitle, VCardSubtitle, VImg } from 'vuetify/components';

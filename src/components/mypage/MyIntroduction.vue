@@ -1,6 +1,6 @@
 <template>
-  <div class="introduction">
-    <div class="introduction-info">
+  <div class="introduction dark:bg-[#1e1e1e]">
+    <div class="introduction-info dark:text-[#e0e0e0]">
       <div class="introduction-header">
         <div class="image-container">
           <img src="/sws.jpg" alt="프로필 이미지" class="profile-image"/>
@@ -12,30 +12,30 @@
           <a href="https://github.com/captain9802" target="_blank" class="github-link">
             <i class="fi fi-br-link-alt" style="padding-right: 3px"></i> GitHub: captain9802<br><br>
           </a>
-          <i class="fi fi-ss-user"  style="padding-right: 3px"></i> 이름: 손우성<br><br>
-          <i class="fi fi-br-calendar-check"  style="padding-right: 3px"></i> 생년월일: 1998.02.24<br><br>
-          <i class="fi fi-ss-home"  style="padding-right: 3px"></i> 위치: 경기도 군포시<br><br>
-          <i class="fi fi-br-envelope"  style="padding-right: 3px"></i> 이메일: captain9802@gmail.com
+          <i class="fi fi-ss-user" style="padding-right: 3px"></i> 이름: 손우성<br><br>
+          <i class="fi fi-br-calendar-check" style="padding-right: 3px"></i> 생년월일: 1998.02.24<br><br>
+          <i class="fi fi-ss-home" style="padding-right: 3px"></i> 위치: 경기도 군포시<br><br>
+          <i class="fi fi-br-envelope" style="padding-right: 3px"></i> 이메일: captain9802@gmail.com
         </p>
       </div>
     </div>
-    <div class="introduction-myself">
+    <div class="introduction-myself dark:text-[#e0e0e0]">
       <p class="introduction-hi">
-        안녕하세요! 기술에 대한 도전과 다양한 기능을 구현하는 것을 즐기는 손우성입니다. <br>
+        안녕하세요! 기술에 대한 도전과 다양한 기능을 구현하는 것을 즐기는 손우성입니다. <br><br>
 
-        풀스택 개발에 관심을 두고 React, Vue.js, Laravel, SpringBoot, Java17 등을 중심으로 다양한 프로젝트를 진행해왔습니다.<br> JavaScript, HTML/CSS3를 활용해 웹 경험을 개선하고, 사용자 친화적인 인터페이스를 만드는 데 노력하고 있습니다.
+        풀스택 개발에 관심을 두고 React, Vue.js, Laravel, SpringBoot, Java17 등을 중심으로 다양한 프로젝트를 진행해왔습니다.<br>
+        JavaScript, HTML/CSS3를 활용해 웹 경험을 개선하고, 사용자 친화적인 인터페이스를 만드는 데 노력하고 있습니다.<br><br>
 
-        또한, NaverCloud, AWS, S3 등의 클라우드 환경과 배포에 대한 경험도 있어, 개발과 배포 과정에서 원활한 협업이 가능합니다.<br>
+        또한, NaverCloud, AWS, S3 등의 클라우드 환경과 배포에 대한 경험도 있어, 개발과 배포 과정에서 원활한 협업이 가능합니다.<br><br>
 
-        도전적인 마음으로 지속적으로 공부하며, 더 나은 서비스를 만들기 위해 노력하고 있습니다.<br><br> 함께 이야기 나누고 싶다면 언제든지 연락 주세요! captain9802@gmail.com😊
+        도전적인 마음으로 지속적으로 공부하며, 더 나은 서비스를 만들기 위해 노력하고 있습니다.<br><br>
+        함께 이야기 나누고 싶다면 언제든지 연락 주세요! captain9802@gmail.com 😊
       </p>
     </div>
   </div>
 </template>
 
-
 <script>
-
 export default {
   name: "MyIntroduction"
 }
@@ -52,6 +52,7 @@ export default {
   background-color: #F3EBE6;
   border-radius: 10px;
   padding: 1rem;
+  transition: all 0.3s ease;
 
   @media (max-width: 1200px) {
     gap: 3rem;
@@ -86,6 +87,7 @@ export default {
 .introduction-myself {
   font-weight: 600;
   color: #3E3E3E;
+
   @media (max-width: 1200px) {
     display: none;
   }
@@ -116,6 +118,7 @@ export default {
 
 .introduction-content {
   font-weight: 600;
+
   @media (max-width: 375px) {
     font-size: 0.9rem;
   }
@@ -124,10 +127,9 @@ export default {
 .github-link {
   text-decoration: none;
   color: inherit;
-}
 
-.github-link:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
-
 </style>

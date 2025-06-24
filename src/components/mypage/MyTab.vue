@@ -1,26 +1,26 @@
 <template>
-  <div class="tab-container">
-      <div
-          class="tab-content"
-          :class="{ active: selectedTab === 'introduction' }"
-          @click="selectTab('introduction')"
-      >
-        <img :src="introductionImage" alt="프로필 탭" class="tab-content-img" />
-      </div>
-      <div
-          class="tab-content"
-          :class="{ active: selectedTab === 'project' }"
-          @click="selectTab('project')"
-      >
-        <img :src="projectImage" alt="프로젝트 탭" class="tab-content-img" />
-      </div>
-      <div
-          class="tab-content"
-          :class="{ active: selectedTab === 'career' }"
-          @click="selectTab('career')"
-      >
-        <img :src="careerImage" alt="경력 탭" class="tab-content-img" />
-      </div>
+  <div class="tab-container dark:bg-[#2c2c2c] transition-colors duration-300">
+    <div
+        class="tab-content"
+        :class="{ active: selectedTab === 'introduction' }"
+        @click="selectTab('introduction')"
+    >
+      <img :src="introductionImage" alt="프로필 탭" class="tab-content-img" />
+    </div>
+    <div
+        class="tab-content"
+        :class="{ active: selectedTab === 'project' }"
+        @click="selectTab('project')"
+    >
+      <img :src="projectImage" alt="프로젝트 탭" class="tab-content-img" />
+    </div>
+    <div
+        class="tab-content"
+        :class="{ active: selectedTab === 'career' }"
+        @click="selectTab('career')"
+    >
+      <img :src="careerImage" alt="경력 탭" class="tab-content-img" />
+    </div>
     <div
         class="tab-content"
         :class="{ active: selectedTab === 'blog' }"
@@ -60,12 +60,14 @@ export default {
 
 <style lang="scss" scoped>
 .tab-container {
-  background-color: #A28974 ;
+  background-color: #A28974;
   display: grid;
   align-content: center;
   justify-content: center;
   height: 100%;
   gap: 3rem;
+  transition: all 0.3s ease;
+
   @media (max-width: 1200px) {
     display: flex;
   }
@@ -84,6 +86,11 @@ export default {
   &:hover {
     animation: shakeAndScale 0.5s ease-in-out infinite;
   }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #3a3a3a;
+  }
+
   @keyframes shakeAndScale {
     0% { transform: scale(1) rotate(0deg); }
     25% { transform: scale(1.1) rotate(3deg); }
@@ -102,6 +109,10 @@ export default {
   background-color: #f0f0f0;
   transform: scale(1.15);
   box-shadow: 0 0 10px #f0f0f0;
-}
 
+  @media (prefers-color-scheme: dark) {
+    background-color: #4a4a4a;
+    box-shadow: 0 0 10px #555;
+  }
+}
 </style>

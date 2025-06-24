@@ -1,11 +1,21 @@
 <template>
   <div v-if="isOpen" class="dialog-overlay" @click.self="closeDialog">
-    <div class="dialog">
+    <div class="dialog dark:bg-[#1e1e1e] dark:text-white">
       <div class="title">로그인</div>
-      <input type="email" v-model="email" placeholder="이메일" class="email-input"/>
-      <input type="password" v-model="password" placeholder="비밀번호" class="password-input"/>
+      <input
+          type="email"
+          v-model="email"
+          placeholder="이메일"
+          class="email-input dark:bg-[#2a2a2a] dark:border-[#555] dark:text-white dark:placeholder-gray-400"
+      />
+      <input
+          type="password"
+          v-model="password"
+          placeholder="비밀번호"
+          class="password-input dark:bg-[#2a2a2a] dark:border-[#555] dark:text-white dark:placeholder-gray-400"
+      />
       <div class="btn">
-      <button @click="handleLogin" class="login-btn">로그인</button>
+        <button @click="handleLogin" class="login-btn">로그인</button>
       </div>
     </div>
   </div>
@@ -27,7 +37,6 @@ const handleLogin = () => {
 const closeDialog = () => {
   emit("close");
 };
-
 </script>
 
 <style scoped>
@@ -42,6 +51,7 @@ const closeDialog = () => {
   justify-content: center;
   align-items: center;
 }
+
 .dialog {
   background: white;
   padding: 20px;
@@ -50,6 +60,7 @@ const closeDialog = () => {
   flex-direction: column;
   gap: 1rem;
   min-width: 350px;
+  transition: background-color 0.3s ease;
 }
 
 .btn {
@@ -58,16 +69,12 @@ const closeDialog = () => {
   gap: 3rem;
 }
 
-.email-input {
-  border: 1px solid;
-  border-radius: 4px;
-  padding: 5px;
-}
-
+.email-input,
 .password-input {
   border: 1px solid;
   border-radius: 4px;
   padding: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .email-input::placeholder,
@@ -76,7 +83,7 @@ const closeDialog = () => {
 }
 
 .login-btn {
-  background-color: #D17A22;
+  background-color: #d17a22;
   color: white;
   padding: 8px 16px;
   border-radius: 10px;
@@ -106,7 +113,6 @@ const closeDialog = () => {
     border-radius: 4px;
     padding: 2px;
   }
-
 
   .title {
     font-size: 1.25rem;

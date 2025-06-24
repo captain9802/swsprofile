@@ -1,32 +1,34 @@
 <template>
   <div>
-  <v-card class="v-card">
-    <div class="dialog-container">
-      <v-card-title class="v-card-title">
-        <span class="headline">{{ blog.title }}</span>
-      </v-card-title>
+    <v-card class="v-card dark:bg-[#1e1e1e] dark:text-white">
+      <div class="dialog-container">
+        <v-card-title class="v-card-title">
+          <span class="headline dark:text-white">{{ blog.title }}</span>
+        </v-card-title>
 
-      <div class="blog-content">
-        <div class="content-group">
-          <div class="blog-contents"><p class="ql-editor" v-html="sanitizedContent"></p></div>
-        </div>
+        <div class="blog-content">
+          <div class="content-group">
+            <div class="blog-contents">
+              <p class="ql-editor" v-html="sanitizedContent"></p>
+            </div>
+          </div>
 
-        <div class="content-group">
-          <div class="tags">
-            <span v-for="(tag, index) in blog.tags" :key="index" class="tag">#{{ tag }}</span>
+          <div class="content-group">
+            <div class="tags">
+              <span v-for="(tag, index) in blog.tags" :key="index" class="tag dark:bg-[#3e3e3e] dark:text-white">#{{ tag }}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="button-group">
-        <button v-if="isLoggedIn" @click="deleteBlogs" class="delete-btn">삭제</button>
-        <button v-if="isLoggedIn" @click="editBlog" class="put-btn">수정</button>
-        <button @click="closeReviewDialog" class="cancel-btn">닫기</button>
+        <div class="button-group">
+          <button v-if="isLoggedIn" @click="deleteBlogs" class="delete-btn dark:border-red-400 dark:text-red-400">삭제</button>
+          <button v-if="isLoggedIn" @click="editBlog" class="put-btn dark:border-green-400 dark:text-green-400">수정</button>
+          <button @click="closeReviewDialog" class="cancel-btn dark:bg-[#555] dark:text-white">닫기</button>
+        </div>
       </div>
-    </div>
-  </v-card>
+    </v-card>
     <v-dialog v-model="putDialogVisible" class="blog_create">
-      <Dialog :isVisible="putDialogVisible" @close-dialog="closeDialog" :blog="blog"/>
+      <Dialog :isVisible="putDialogVisible" @close-dialog="closeDialog" :blog="blog" />
     </v-dialog>
   </div>
 </template>
@@ -317,4 +319,7 @@ export default {
   color: #3E3E3E;
 }
 
+.dark .ql-editor {
+  color: #f0f0f0;
+}
 </style>

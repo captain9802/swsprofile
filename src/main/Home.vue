@@ -1,5 +1,5 @@
 <template>
-  <div class="layout min-h-screen bg-white text-black dark:bg-[#121212] dark:text-white transition-colors duration-300">
+  <div class="layout min-h-screen bg-white text-black dark:bg-[#121212] dark:text-white">
     <div class="left bg-[#A28974] dark:bg-[#2c2c2c] p-5">
       <MyIntroduction />
     </div>

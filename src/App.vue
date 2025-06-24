@@ -26,7 +26,7 @@ watch(isDark, (val) => {
   <div id="app" class="min-h-screen bg-white text-black dark:bg-[#121212] dark:text-white transition-all">
     <button
         @click="toggleDark"
-        class="fixed top-4 right-4 z-50 px-4 py-2 text-sm rounded shadow-md bg-gray-200 dark:bg-gray-700 dark:text-white"
+        class="fixed top-5 left-5 z-50 px-4 py-2 text-sm rounded shadow-md bg-gray-200 dark:bg-gray-700 dark:text-white"
     >
       {{ isDark ? '☀️ Light' : '🌙 Dark' }}
     </button>

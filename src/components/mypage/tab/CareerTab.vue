@@ -1,34 +1,41 @@
 <template>
-  <div class="career-tab">
+  <div class="career-tab dark:bg-[#1e1e1e] transition-colors duration-300">
     <div class="career-tab-content">
-      <h3>경력 사항</h3>
+      <h3 class="dark:text-[#dca673]">경력 사항</h3>
       <div class="career-list">
-        <div class="career-item">
-          <span class="date">구직중</span>
+        <div class="career-item dark:border-[#dca673]">
+          <span class="date dark:text-[#e0e0e0]">구직중</span>
         </div>
 
-        <div class="project">
+        <div class="project dark:bg-[#2a2a2a]">
           <div class="project-item">
-          <img src="/bitcamp.png" class="career-image"/>
-          <div class="project-item-title">네이버 데브옵스 비트캠프 (23.10 ~ 24.04)</div>
+            <img src="/bitcamp.png" class="career-image" />
+            <div class="project-item-title dark:text-[#e0e0e0]">네이버 데브옵스 비트캠프 (23.10 ~ 24.04)</div>
           </div>
-          <p>📌 <strong>개발언어:</strong> <span class="badge">Front : Thymeleaf, React, Javascript, Html, Css | Back : Spring, SpringBoot, Node.js | Server : NaverCloud, Mysql, Ubuntu </span></p>
+          <p class="dark:text-[#e0e0e0]">
+            📌 <strong>개발언어:</strong>
+            <span class="badge dark:bg-[#444] dark:text-[#e0e0e0]">
+              Front : Thymeleaf, React, Javascript, Html, Css |
+              Back : Spring, SpringBoot, Node.js |
+              Server : NaverCloud, Mysql, Ubuntu
+            </span>
+          </p>
           <ul>
-            <li>Secondstory</li>
-            <li>사용 언어: Java, JavaScript, HTML/CSS3</li>
-            <li>개발 환경: Java17, Gradle, SpringBoot, JQuery, Thymeleaf</li>
-            <li>서버 / 배포 환경: NaverCloud, MySQL, ObjectStorage</li>
-            <li>주요 역할: 메인 페이지 구현</li>
-            <li>주요 배운 점: 비동기 요청(AJAX) 활용, 쿠키를 이용한 사용자 경험 개선, 협업툴 활용</li>
+            <li class="dark:text-[#e0e0e0]">Secondstory</li>
+            <li class="dark:text-[#e0e0e0]">사용 언어: Java, JavaScript, HTML/CSS3</li>
+            <li class="dark:text-[#e0e0e0]">개발 환경: Java17, Gradle, SpringBoot, JQuery, Thymeleaf</li>
+            <li class="dark:text-[#e0e0e0]">서버 / 배포 환경: NaverCloud, MySQL, ObjectStorage</li>
+            <li class="dark:text-[#e0e0e0]">주요 역할: 메인 페이지 구현</li>
+            <li class="dark:text-[#e0e0e0]">주요 배운 점: 비동기 요청(AJAX) 활용, 쿠키를 이용한 사용자 경험 개선, 협업툴 활용</li>
           </ul>
 
           <ul>
-            <li>Nc4All</li>
-            <li>사용 언어: Java, HTML, CSS, JavaScript</li>
-            <li>개발 환경: Java17, SpringBoot, Node.js, React</li>
-            <li>서버 / 배포 환경: NaverCloud, MySQL, ObjectStorage</li>
-            <li>주요 역할: 메인 페이지, 관리자 페이지 개발</li>
-            <li>주요 배운 점: React와 JPA/QueryDsl 활용, 반응형 디자인 구현, 관리자 시스템 개발</li>
+            <li class="dark:text-[#e0e0e0]">Nc4All</li>
+            <li class="dark:text-[#e0e0e0]">사용 언어: Java, HTML, CSS, JavaScript</li>
+            <li class="dark:text-[#e0e0e0]">개발 환경: Java17, SpringBoot, Node.js, React</li>
+            <li class="dark:text-[#e0e0e0]">서버 / 배포 환경: NaverCloud, MySQL, ObjectStorage</li>
+            <li class="dark:text-[#e0e0e0]">주요 역할: 메인 페이지, 관리자 페이지 개발</li>
+            <li class="dark:text-[#e0e0e0]">주요 배운 점: React와 JPA/QueryDsl 활용, 반응형 디자인 구현, 관리자 시스템 개발</li>
           </ul>
         </div>
       </div>
@@ -49,6 +56,7 @@ export default {
   overflow: auto;
   width: 100%;
   height: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .career-tab-content {
@@ -114,11 +122,10 @@ p {
 
 .badge {
   background-color: white;
-  color: black;
+  color: #3E3E3E;
   padding: 3px 7px;
   border-radius: 5px;
   font-size: 0.9rem;
-  color: #3E3E3E;
 }
 
 ul {
@@ -143,12 +150,20 @@ li {
 }
 
 .career-tab::-webkit-scrollbar-thumb {
-  background: red;
+  background: #d2b6aa;
   border-radius: 10px;
   transition: background 0.3s ease;
 }
 
 .career-tab::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #888;
+}
+
+.dark .career-tab::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+.dark .career-tab::-webkit-scrollbar-thumb {
+  background: #666;
 }
 </style>
